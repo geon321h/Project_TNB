@@ -6,13 +6,16 @@ public class ShopBean {
 	private String shop_name;
 	private String region;
 	private String shop_address;
+	private String shop_info;
 	private int grade;
 	private int review_count;
 	private int category_id;
 	private String shop_date;
 	
-	/* 최저가 */
+	/* 최저가, 대표이미지 */
 	private int price;
+	private String image;
+	private String category_name;
 	
 	public int getShop_id() {
 		return shop_id;
@@ -74,8 +77,23 @@ public class ShopBean {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	
-	
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
+	public String getShop_info() {
+		return shop_info;
+	}
+	public void setShop_info(String shop_info) {
+		this.shop_info = shop_info;
+	}
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
 	
 }

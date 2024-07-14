@@ -1,0 +1,137 @@
+package shop.model;
+
+public class ReviewBean {
+
+	private int review_id;
+	private int room_id;
+	private int shop_id;
+	private int user_id;
+	private int reservation_id;
+	private String review_content;
+	private double grade;
+	private int recommend;
+	private String review_date;
+	
+	/* 이미지 및 리뷰 요소 */
+	private String image;
+	private String user_name;
+	private String user_img;
+	private String room_name;	
+	private String shop_name;	
+
+	public int getReview_id() {
+		return review_id;
+	}
+
+	public void setReview_id(int review_id) {
+		this.review_id = review_id;
+	}
+
+	public int getRoom_id() {
+		return room_id;
+	}
+
+	public void setRoom_id(int room_id) {
+		this.room_id = room_id;
+	}
+
+	public int getShop_id() {
+		return shop_id;
+	}
+
+	public void setShop_id(int shop_id) {
+		this.shop_id = shop_id;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getReview_content() {
+		return review_content;
+	}
+
+	public void setReview_content(String review_content) {
+		this.review_content = review_content;
+	}
+
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+
+	public int getRecommend() {
+		return recommend;
+	}
+
+	public void setRecommend(int recommend) {
+		this.recommend = recommend;
+	}
+
+	public String getReview_date() {
+		return review_date;
+	}
+
+	public void setReview_date(String review_date) {
+		this.review_date = review_date;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public String getUser_img() {
+		return user_img;
+	}
+
+	public void setUser_img(String user_img) {
+		this.user_img = user_img;
+	}
+
+	public String getRoom_name() {
+		return room_name;
+	}
+
+	public void setRoom_name(String room_name) {
+		this.room_name = room_name;
+	}
+
+	public int getReservation_id() {
+		return reservation_id;
+	}
+
+	public void setReservation_id(int reservation_id) {
+		this.reservation_id = reservation_id;
+	}
+	public String getShop_name() {
+		return shop_name;
+	}
+
+	public void setShop_name(String shop_name) {
+		this.shop_name = shop_name;
+	}
+	
+	
+	
+	
+	
+}

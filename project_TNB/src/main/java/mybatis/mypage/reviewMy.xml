@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="mypage.model.ReviewMy"> 
+ 	
+ 	<select id="getReservationById" resultType="reservation">
+ 		SELECT * 
+ 		FROM ROOM_RESERVATION
+ 		WHERE room_reservation_num = #{reservation_id}
+ 	</select>
+ 	
+ </mapper>
+ 
+ 
+ 
+ 
