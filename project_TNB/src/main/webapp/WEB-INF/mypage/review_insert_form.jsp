@@ -37,7 +37,10 @@
                             </td>      
                             <tr>
                                 <td>평점</td>
-                                <td></td>                            
+                                <td>
+                                    <input type="range" name="grade" class="grade_range" min="1" max="20">
+                                    <label class="grade_range_text">평점</label>
+                                </td>                            
                             </tr>                            
                             <tr>
                                 <td>이미지</td>
@@ -45,7 +48,7 @@
                             </tr>                            
                             <tr>
                                 <td>내용</td>
-                                <td></td>                            
+                                <td><textarea name=""></textarea></td>                            
                             </tr>                            
                         </tr>
                		</table>
