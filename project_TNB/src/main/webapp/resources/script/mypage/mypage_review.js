@@ -11,6 +11,12 @@ window.addEventListener('load', function() {
 function insertImg(){
     let file_length = $('.file_area').length;
     //console.log(file_length);
+    let save_length = $('.save_area').length;
+    //console.log(save_length);
+    if(save_length != null && save_length > 0){
+        file_length = file_length + save_length;
+    }
+    console.log(file_length);
 
     if(file_length<10){
         const file_div = document.createElement("div");

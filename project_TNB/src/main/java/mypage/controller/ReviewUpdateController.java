@@ -63,18 +63,74 @@ public class ReviewUpdateController {
 			@ModelAttribute("review") @Valid ReviewBean review,
 			BindingResult result) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("getSave_image:"+review.getSave_image()); 
-
+		String uploadPath = servletContext.getRealPath("/resources/assets/image");
+		// System.out.println("getSave_image:"+review.getSave_image()); 
+		
+		List<ReviewBean> review_img_list = mypageReviewDao.getReviewImageById(String.valueOf(review.getReview_id()));
+		mav.addObject("review_img_list", review_img_list);
+		
 		if (result.hasErrors()) {
 			System.out.println("에러");
-			List<ReviewBean> review_img_list = mypageReviewDao.getReviewImageById(String.valueOf(review.getReview_id()));
-			mav.addObject("review_img_list", review_img_list);
 			mav.setViewName(getPage);
 			return mav;
 		}
-		review.setReview_content(review.getReview_content().replaceAll("\r\n","<br>"));
 		
-		mav.setViewName(getPage);
+		review.setReview_content(review.getReview_content().replaceAll("\r\n","<br>"));		
+		if(review.getUpload()==null) {
+			review.setImage("");
+		}
+
+		int cnt = -1;
+		cnt = mypageReviewDao.updateReview(review);
+		if(cnt>0) {
+			// 신규 추가 이미지
+			if(review.getUpload()!=null) {
+				for(MultipartFile upload : review.getUpload()) {
+					MultipartFile multi = upload;
+					//System.out.println("###:"+uploadPath+File.separator+multi.getOriginalFilename());
+					File destination = new File(uploadPath+File.separator+multi.getOriginalFilename());
+					try {
+						multi.transferTo(destination);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+			for(ReviewBean image : review_img_list) {
+				if(review.getSave_image()==null){
+					review.setSave_image("");
+				}
+				if(!review.getSave_image().contains(image.getImage())) {
+					System.out.println("삭제된 이미지:"+image.getImage()+" & "+image.getReview_img_id());
+					
+					// 데이터베이스에 이미지 테이블 삭제
+					mypageReviewDao.deleteReviewImage(image);
+					
+					// 이미지 폴더내 파일 삭제
+					String fullPath = uploadPath+File.separator+image.getImage();
+					
+					File file = new File(fullPath);
+					if(file.exists()){
+						if(file.delete()){
+							System.out.println("파일 삭제");
+						}else{
+							System.out.println("파일삭제 실패");
+						}
+					}else{
+						System.out.println("파일없음");
+					}
+				}
+			
+			}
+			mav.setViewName(goToPage);
+			
+		}else {
+			mav.setViewName(getPage);
+		}
+		
 		return mav;
 	}
 	
