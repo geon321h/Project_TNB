@@ -32,7 +32,7 @@ public class MypageReviewDao {
 		
 		// 리뷰 이미지 테이블 다중생성
 		List<ReviewBean> list = new ArrayList<ReviewBean>();
-		String[] review_arr = review.getImage().split(" ");
+		String[] review_arr = review.getImage().split(" /-/ ");
 		for(String review_img : review_arr) {
 			//System.out.println("review_id: "+review_id);
 			//System.out.println("review_image_id: "+review_img_id);
@@ -58,9 +58,12 @@ public class MypageReviewDao {
 
 	public void deleteReview(String review_id) {
 		int cnt = -1;
-		cnt = sqlSessionTemplate.delete(namespace+".deleteReview",review_id);
+		ReviewBean rb = sqlSessionTemplate.selectOne(namespace+".getReviewById",review_id);
+		cnt = sqlSessionTemplate.delete(namespace+".deleteReview",review_id);		
 		if(cnt<=0) {
 			System.out.println("삭제실패");
+		}else {			
+			sqlSessionTemplate.update(namespace+".updateShopReviewDown",rb.getShop_id());
 		}
 		
 	}
@@ -69,6 +72,38 @@ public class MypageReviewDao {
 		ReviewBean rb = new ReviewBean();
 		rb = sqlSessionTemplate.selectOne(namespace+".getReviewById",review_id);
 		return rb;
+	}
+
+	public void deleteReviewImage(ReviewBean image) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.delete(namespace+".deleteReviewImage",image);
+		if(cnt<=0) {
+			System.out.println("삭제실패");
+		}
+		
+	}
+
+	public int updateReview(ReviewBean review) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update(namespace+".updateReview",review);
+		if(review.getImage() != "") {
+			int review_img_id = sqlSessionTemplate.selectOne(namespace+".getReviewImageId",review.getReview_id());
+			List<ReviewBean> list = new ArrayList<ReviewBean>();
+			String[] review_arr = review.getImage().split(" /-/ ");
+			for(String review_img : review_arr) {
+				//System.out.println("review_img: "+review_img);
+				ReviewBean rb = new ReviewBean();
+				rb.setImage(review_img);
+				rb.setReview_img_id(review_img_id); 
+				rb.setReview_id(review.getReview_id());
+				list.add(rb);
+				review_img_id++;
+			}
+			sqlSessionTemplate.insert(namespace+".insertReviewImage",list);			
+		}
+		
+		sqlSessionTemplate.update(namespace+".updateShopReviewGrade",review);
+		return cnt;
 	}
 	
 	

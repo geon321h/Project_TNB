@@ -1,13 +1,8 @@
 package shop.model;
 
-import java.util.Iterator;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ReviewBean {
@@ -51,7 +46,10 @@ public class ReviewBean {
 			image = "";
 			for(int i=0;i<upload.length;i++) {
 				//System.out.println("###upload.getOriginalFilename():"+upload[i].getOriginalFilename()); // 이미지명
-				image += upload[i].getOriginalFilename()+ " ";
+				image += upload[i].getOriginalFilename();
+				if(i!=upload.length-1) {
+					image += " /-/ ";
+				}
 			}
 		}
 	}	 
