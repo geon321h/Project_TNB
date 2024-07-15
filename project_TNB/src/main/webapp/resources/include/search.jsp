@@ -9,7 +9,7 @@
 
 <script src="<%=request.getContextPath()%>/resources/script/search.js?after"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/css/shop/search.css?after">
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
 
 <div id="search_form">
     <div>
