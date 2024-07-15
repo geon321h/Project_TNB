@@ -43,6 +43,9 @@
 		<if test="search.category_id!=0">
 			AND category_id = #{search.category_id}
 		</if>  
+		<if test="whatColumn==null">
+			ORDER BY GRADE DESC
+		</if>  
 		<if test="whatColumn=='평점높은순'">
 			ORDER BY GRADE DESC
 		</if>  

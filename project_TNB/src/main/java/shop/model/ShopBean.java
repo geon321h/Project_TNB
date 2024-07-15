@@ -7,7 +7,7 @@ public class ShopBean {
 	private String region;
 	private String shop_address;
 	private String shop_info;
-	private int grade;
+	private double grade;
 	private int review_count;
 	private int category_id;
 	private String shop_date;
@@ -47,10 +47,10 @@ public class ShopBean {
 	public void setShop_address(String shop_address) {
 		this.shop_address = shop_address;
 	}
-	public int getGrade() {
+	public double getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
+	public void setGrade(double grade) {
 		this.grade = grade;
 	}
 	public int getReview_count() {

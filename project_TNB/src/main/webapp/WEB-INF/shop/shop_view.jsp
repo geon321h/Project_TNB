@@ -32,7 +32,7 @@
 			<div class="content_info">
 				<p>${shop_info.category_name}</p>
 				<p>${shop_info.shop_name}</p>
-				<p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png">${shop_info.grade}<span>${shop_info.review_count}명 리뷰</span></p>
+				<p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png"><fmt:formatNumber value="${shop_info.grade}" pattern="#.#" /><span>${shop_info.review_count}명 리뷰</span></p>
 				<div class="line"></div>
 				<h2>숙소소개</h2>
 				<p>${shop_info.shop_info}</p>
@@ -79,7 +79,7 @@
 					<p class="guide_content">${guide.guide_content}</p>
 				</c:forEach>
 				<div class="review_sort">
-					<p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png">${shop_info.grade}<span>${shop_info.review_count}명 리뷰</span></p>
+					<p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png"><fmt:formatNumber value="${shop_info.grade}" pattern="#.#" /><span>${shop_info.review_count}명 리뷰</span></p>
 					<label class="reviewColumn dropdown-toggle"  id="dropdown_reviewColumn" data-bs-toggle="dropdown" aria-expanded="false">
 					<img src="<%=request.getContextPath()%>/resources/assets/icon/sort_icon.svg">
 					 추천순

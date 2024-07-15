@@ -80,7 +80,7 @@
 						</c:forEach>
 					  <p class="name_content">${shop.shop_name}</p>
 					  <p  class="address_content">${shop.shop_address}</p>
-					  <p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png">${shop.grade}<span>${shop.review_count}명 리뷰</span></p>
+					  <p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png"><fmt:formatNumber value="${shop.grade}" pattern="#.#" /><span>${shop.review_count}명 리뷰</span></p>
 					  <p  class="price_content"><fmt:formatNumber value="${shop.price}" pattern="#,###" /> 원<span>/1박당</span></p>
 					</div>
 				</div>

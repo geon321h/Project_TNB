@@ -28,7 +28,13 @@
                             <td>${review.grade}점</td>
                             <td>${review.recommend}명 추천</td>
                             <fmt:parseDate value="${review.review_date}" var="review_date" pattern="yyyy-MM-dd"/>
-                            <td><fmt:formatDate value="${review_date}" pattern="yyyy-MM-dd"/></td>                            
+                            <td><fmt:formatDate value="${review_date}" pattern="yyyy-MM-dd"/></td>
+                            <td>
+                                <a href="review_update.mp?review_id=${review.review_id}" class="btn">수정</a>
+                            </td>                           
+                            <td>
+                                <a href="review_delete.mp?review_id=${review.review_id}" class="btn">삭제</a>
+                            </td>                           
                         </tr>
                     </c:forEach>
                 </table>

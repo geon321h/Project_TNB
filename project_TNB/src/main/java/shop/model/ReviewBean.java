@@ -1,5 +1,15 @@
 package shop.model;
 
+import java.util.Iterator;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReviewBean {
 
 	private int review_id;
@@ -7,17 +17,44 @@ public class ReviewBean {
 	private int shop_id;
 	private int user_id;
 	private int reservation_id;
+	
+	@NotBlank(message = "리뷰 내용을 입력해주세요.")
+	@Size(max = 300, message = "리뷰 내용은 300자 이내로 입력해주세요.")
 	private String review_content;
+	
 	private double grade;
 	private int recommend;
 	private String review_date;
 	
 	/* 이미지 및 리뷰 요소 */
+	private int review_img_id;
+	
+	@NotBlank(message = "최소 한개의 이미지를 추가해주세요.")
 	private String image;
+	
+	private String save_image;
+	private MultipartFile[] upload;
+	
 	private String user_name;
 	private String user_img;
 	private String room_name;	
 	private String shop_name;	
+	
+	public MultipartFile[] getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile[] upload) {
+		//System.out.println("setUpload");
+		this.upload = upload;
+		if (this.upload.length > 0 ) {
+			image = "";
+			for(int i=0;i<upload.length;i++) {
+				//System.out.println("###upload.getOriginalFilename():"+upload[i].getOriginalFilename()); // 이미지명
+				image += upload[i].getOriginalFilename()+ " ";
+			}
+		}
+	}	 
 
 	public int getReview_id() {
 		return review_id;
@@ -128,6 +165,22 @@ public class ReviewBean {
 
 	public void setShop_name(String shop_name) {
 		this.shop_name = shop_name;
+	}
+
+	public int getReview_img_id() {
+		return review_img_id;
+	}
+
+	public void setReview_img_id(int review_img_id) {
+		this.review_img_id = review_img_id;
+	}
+
+	public String getSave_image() {
+		return save_image;
+	}
+
+	public void setSave_image(String save_image) {
+		this.save_image = save_image;
 	}
 	
 	
