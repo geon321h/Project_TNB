@@ -12,6 +12,7 @@
         <div class="content_mypage container">
             <div class="aside_mypage">
                 <div class="aside_menu_mypage">
+                	<a href="myshop_list.mp">시설 관리</a>
                     <a href="review_list.mp">내 리뷰</a>
                 </div>
             </div>

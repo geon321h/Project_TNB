@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import mypage.model.MypageReviewDao;
+import mypage.model.MyReviewDao;
 import shop.model.ReviewBean;
 
 @Controller
@@ -22,7 +22,7 @@ public class ReviewDeleteController {
 	private final String getPage = "redirect:review_list.mp";
 	
 	@Autowired
-	MypageReviewDao mypageReviewDao;
+	MyReviewDao mypageReviewDao;
 	
 	@Autowired
 	ServletContext servletContext;

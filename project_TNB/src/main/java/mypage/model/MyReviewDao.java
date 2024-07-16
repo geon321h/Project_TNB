@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import shop.model.ReviewBean;
 
-@Component("myMypageReviewDao")
-public class MypageReviewDao {
+@Component("mypageReviewDao")
+public class MyReviewDao {
 
 	private String namespace = "mypage.model.ReviewMy";
 	

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import mypage.model.MypageReviewDao;
+import mypage.model.MyReviewDao;
 import mypage.model.RoomReservationBean;
 import shop.model.ReviewBean; 
 import shop.model.ReviewDao;
@@ -33,7 +33,7 @@ public class ReviewInsertController {
 	ReviewDao reviewDao;
 	
 	@Autowired
-	MypageReviewDao mypageReviewDao;
+	MyReviewDao mypageReviewDao;
 	
 	@Autowired
 	ServletContext servletContext;

@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="mybatis/shop/shop.xml"/>
 		<mapper resource="mybatis/shop/review.xml"/>
 		<mapper resource="mybatis/mypage/reviewMy.xml"/>
+		<mapper resource="mybatis/mypage/shopMy.xml"/>
 	</mappers>
 </configuration>
 
