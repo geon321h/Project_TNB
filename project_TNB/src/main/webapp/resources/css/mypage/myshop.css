@@ -286,6 +286,9 @@
     margin-bottom: 0px;
 }
 
+#content_container .info_content .err {
+    margin-top: 10px !important;
+}
 
 .shop_insert_area .shop_text_input {
     width: 40%;

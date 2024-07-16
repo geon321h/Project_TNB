@@ -23,6 +23,8 @@ function sample6_execDaumPostcode() {
                 addr = data.jibunAddress;
             }
 
+            /* // 우편번호와 추가정보가 필요 없기에 주석처리
+
             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
             if(data.userSelectedType === 'R'){
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -44,12 +46,13 @@ function sample6_execDaumPostcode() {
             } else {
                 document.getElementById("sample6_extraAddress").value = '';
             }
-
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById("sample6_address").value = addr;
+            //document.getElementById('sample6_postcode').value = data.zonecode;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("sample6_detailAddress").focus();
+            //document.getElementById("sample6_detailAddress").focus();
+             */
+
+            document.getElementById("sample6_address").value = addr;
         }
     }).open();
 }

@@ -42,7 +42,8 @@
                     <div class="info_content">
                     	<c:forEach items="${list_category}" var="category">
 	                        <input type="radio" class="btn-check" name="category_id" value="${category.category_id}" 
-	                        id="btn-check-outlined${category.category_id}" autocomplete="off">
+	                        id="btn-check-outlined${category.category_id}" autocomplete="off"
+	                        <c:if test="${shop.category_id == category.category_id}"> checked </c:if> >
 	                        <label class="btn btn-outline-secondary category_btn" for="btn-check-outlined${category.category_id}">${category.category_name}</label>
                     	</c:forEach>
                     	<p><form:errors path="category_id" cssClass="err"></form:errors></p>
@@ -50,10 +51,12 @@
                 	<p class="info_title">서비스 및 부대시설</p>
                     <div class="info_content">
                     	<c:forEach items="${list_service}" var="service">
-	                        <input type="checkbox" class="btn-check" name="service_id" value="${service.service_id}" 
-	                        id="btn-check-outlined-service-${service.service_id}" autocomplete="off">
+	                        <input type="checkbox" class="btn-check" name="category_name" value="${service.service_id}_${service.service_name}" 
+	                        id="btn-check-outlined-service-${service.service_id}" autocomplete="off"
+	                        <c:if test="${fn:contains(shop.category_name,(service.service_id+='_'+=service.service_name))}"> checked </c:if>  >
 	                        <label class="btn btn-outline-secondary category_btn" for="btn-check-outlined-service-${service.service_id}">${service.service_name}</label>
                     	</c:forEach>
+                    	
                     </div>
                 	<p class="info_title">지역 및 주소</p>
                     <div class="info_content">
@@ -61,14 +64,15 @@
                         aria-label=".form-select-region">
                             <option selected value="">지역 선택</option>
                             <c:forEach items="<%=region%>" var="region">
-	                            <option value="${region}">${region}</option>
+	                            <option value="${region}" 
+	                            <c:if test="${shop.region == region}"> selected </c:if>
+	                            >${region}</option>
                             </c:forEach>
-                            <p><form:errors path="region" cssClass="err"></form:errors></p>
                         </select>
+                            <p><form:errors path="region" cssClass="err"></form:errors></p>
                         <div class="address_area">
-                            <input type="text" class="address_input" name="shop_address" id="sample6_address" placeholder="주소">
+                            <input type="text" class="address_input" name="shop_address" id="sample6_address" placeholder="주소" value="${shop.shop_address}">
                             <input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="주소 검색"><br>
-                            <input type="text" class="address_input" name="shop_address" id="sample6_detailAddress" placeholder="상세주소">   
                             <p><form:errors path="shop_address" cssClass="err"></form:errors></p>
                         </div>
                     </div>
@@ -92,7 +96,14 @@
                         </div>
                     </div>
                     <div class="guide_area">
-                        
+                        <c:if test="${fn:length(list_guide)>0}">
+                        	<c:forEach items="${list_guide}" var="guideMy" varStatus="vs">
+		                        <div class="guide_content guideNum${vs.index}">
+		                            <p>제목</p> <input type="text" name="guide_title" placeholder="이용정보 소제목을 정해주세요. (최대 30자)" value="${guideMy.guide_title}">
+		                            <p>내용</p> <textarea name="guide_content" placeholder="상세 내용을 입력해주세요. (최대 200자)">${guideMy.guide_content}</textarea>
+		                        </div>
+                        	</c:forEach> 
+                        </c:if>
                     </div>
                     <p class="err guide_err"></p>
                 </div>
