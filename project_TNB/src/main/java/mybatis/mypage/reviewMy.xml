@@ -45,6 +45,14 @@
  		UPDATE SHOP SET REVIEW_COUNT = REVIEW_COUNT+1,GRADE = (SELECT AVG(GRADE)GRADE_AVG FROM REVIEW) WHERE SHOP_ID = #{shop_id}         
  	</update>
  	
+ 	<update id="updateShopReviewDown">
+ 		UPDATE SHOP SET REVIEW_COUNT = REVIEW_COUNT-1,GRADE = (SELECT AVG(GRADE)GRADE_AVG FROM REVIEW) WHERE SHOP_ID = #{shop_id}         
+ 	</update>
+ 	
+ 	<update id="updateShopReviewGrade">
+ 		UPDATE SHOP SET GRADE = (SELECT AVG(GRADE)GRADE_AVG FROM REVIEW) WHERE SHOP_ID = #{shop_id}         
+ 	</update>
+ 	
  	<select id="getReviewImageById" resultType="review">
  		SELECT * 
  		FROM REVIEW_IMAGE
@@ -63,6 +71,19 @@
 		      ,SHOP T20
 		WHERE T10.SHOP_ID = T20.SHOP_ID
  	</select>
+ 	
+ 	<delete id="deleteReviewImage">
+ 		DELETE REVIEW_IMAGE 
+ 		WHERE REVIEW_ID = #{review_id}
+ 		AND REVIEW_IMG_ID = #{review_img_id}
+ 	</delete>
+ 	
+ 	<update id="updateReview">
+ 		UPDATE REVIEW 
+ 		SET REVIEW_CONTENT = #{review_content}
+ 				,GRADE = #{grade}
+ 		WHERE REVIEW_ID = #{review_id}
+ 	</update>
  	
  </mapper>
  
