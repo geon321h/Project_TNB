@@ -88,10 +88,35 @@ form {
 
 .view_container .room_info_area p {
     margin: 0;
+    font-size: 12px;
+    font-family: 'NanumSquare_B';
+    color: var(--bs-gray-500); 
 }
 
 .view_container .room_info_area .room_price_area{
     text-align: right;
+}
+
+.view_container .room_name{
+    font-size: 20px;
+    font-family: 'NanumSquare_B';
+    color: var(--bs-gray-900); 
+}
+
+
+.view_container .sub_title{
+    font-size: 14px !important;
+    color: var(--bs-gray-900) !important; 
+}
+
+.view_container .room_price_area p{
+    font-size: 20px;
+    color: var(--bs-gray-900); 
+}
+
+.view_container .room_price_area p span{
+    font-size: 14px;
+    font-family: 'NanumSquare_R';
 }
 
 

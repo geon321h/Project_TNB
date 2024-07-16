@@ -52,18 +52,18 @@
 								<img src="<%=request.getContextPath()%>/resources/assets/image/${room.image}">
 							</div>
 							<div class="room_text_area">
-								<p>${room.room_name}</p>
+								<p class="room_name">${room.room_name}</p>
 								<div class="room_info_area">
 									<div class="room_time_people_area">
-										<p>인원</p>
+										<p class="sub_title">인원</p>
 										<p>기준 ${room.standard_people}인</p>
 										<p>최대 ${room.max_people}인</p>
-										<p>인원</p>
+										<p class="sub_title">시간</p>
 										<p>입실 ${room.check_in}:00</p>
 										<p>퇴실 ${room.check_out}:00</p>
 									</div>
 									<div class="room_price_area">
-										<p>${room.price}<span>/1박당</span></p>
+										<p><fmt:formatNumber value="${room.price}" pattern="#,###" /> 원<span>/1박당</span></p>
 										<c:if test="${room.room_count==0}"><p>다른 날짜 확인</p></c:if>
 										<c:if test="${room.room_count>0}"><button>객실예약</button></c:if>
 									</div>

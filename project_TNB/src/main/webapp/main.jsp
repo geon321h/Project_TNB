@@ -87,6 +87,7 @@
 						console.log(shop.category_name);
 						console.log(shop.shop_name);
 						let grade = Number(shop.grade).toFixed(1);
+						let price = Number(shop.price).toLocaleString('ko-KR');
 						let abc = shop.image;
 						console.log("abc:"+abc)				
 						list += '<div class="content_box" onclick="viewPage('+shop.shop_id+',`'+shop.shop_name+'`)">'
@@ -97,7 +98,7 @@
 						list +=			'<p class="content_category_name">'+shop.category_name+'</p>'
 						list +=					'<p class="content_shop_name">'+shop.shop_name+'</p>'
 						list +=					`<div class="price_grade_box">`
-						list +=						'<p class="content_price">'+shop.price+'<span>/1박당</span></p>'
+						list +=						'<p class="content_price">'+price+'원 <span>/1박당</span></p>'
 						list +=						'<p class="content_grade"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png">'+grade+'</p>'
 						list +=					`</div>`
 						list +=				`</div>`

@@ -120,18 +120,6 @@
     margin-bottom: 10px;
 }
 
-#content_container .content_box .content_price {
-    font-family: 'NanumSquare_B';
-    font-size: 16px;
-    color: var(--bs-gray-900);
-}
-
-#content_container .content_box .content_price span {
-    font-family: 'NanumSquare_R';
-    font-size: 14px;
-    color: var(--bs-gray-500);
-}
-
 #content_container .content_box .content_grade {
     font-family: 'NanumSquare_B';
     font-size: 14px;
@@ -145,6 +133,7 @@
     padding-bottom: 1px;
     padding-right: 5px;
 }
+
 
 
 
