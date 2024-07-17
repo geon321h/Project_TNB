@@ -9,7 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import utility.Paging;
+import utility.Shop_Paging;
 
 @Component("myShopDao")
 public class ShopDao {
@@ -19,7 +19,7 @@ public class ShopDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 	
-	public List<ShopBean> search_shop(Paging pageInfo, Map<String, Object> map) {
+	public List<ShopBean> search_shop(Shop_Paging pageInfo, Map<String, Object> map) {
 		RowBounds rowBounds = new RowBounds(pageInfo.getOffset(),pageInfo.getLimit());
 		List<ShopBean> lists = new ArrayList<ShopBean>();
 		lists = sqlSessionTemplate.selectList(namespace+".search_shop",map,rowBounds);

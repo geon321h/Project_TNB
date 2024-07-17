@@ -24,7 +24,7 @@ import shop.model.ServiceBean;
 import shop.model.ShopBean;
 import shop.model.ShopDao;
 import shop.model.ShopRoomBean;
-import utility.Paging;
+import utility.Shop_Paging;
 
 @Controller
 public class Shop_View_Controller {

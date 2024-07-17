@@ -90,4 +90,20 @@
 		<url-pattern>*.mp</url-pattern>
 	</servlet-mapping>
 
+	<!-- 멤버 관련xml -->
+	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/member-servlet.xml</param-value>
+      	</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>*.mb</url-pattern>
+	</servlet-mapping>
+
 </web-app>

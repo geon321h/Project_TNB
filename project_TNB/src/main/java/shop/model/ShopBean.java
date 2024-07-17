@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 public class ShopBean {
 	private int shop_id;
@@ -37,6 +38,42 @@ public class ShopBean {
 	private String category_name;
 	private int service_id;
 	
+	private String save_image;
+	private MultipartFile[] upload;
+	private String[] image_name;
+	
+	public MultipartFile[] getUpload() {
+		return upload;
+	}
+
+	public void setUpload(MultipartFile[] upload) {
+		//System.out.println("setUpload");
+		this.upload = upload;
+		if (this.upload.length > 0 ) {
+			image = "";
+			for(int i=0;i<upload.length;i++) {
+				//System.out.println("###upload.getOriginalFilename():"+upload[i].getOriginalFilename()); // 이미지명
+				image_name[i] += upload[i].getOriginalFilename();
+			}
+		}
+	}	 
+	
+	public String getSave_image() {
+		return save_image;
+	}
+
+	public void setSave_image(String save_image) {
+		this.save_image = save_image;
+	}	
+	
+	public String[] getImage_name() {
+		return image_name;
+	}
+
+	public void setImage_name(String[] image_name) {
+		this.image_name = image_name;
+	}
+
 	public int getShop_id() {
 		return shop_id;
 	}

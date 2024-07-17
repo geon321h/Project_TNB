@@ -1,8 +1,11 @@
 package mypage.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import mypage.model.MyShopDao;
@@ -36,6 +40,9 @@ public class MyShopInsertController {
 	
 	@Autowired
 	ShopDao shopDao;
+	
+	@Autowired
+	ServletContext servletContext;
 	
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public ModelAndView insertform() {
@@ -103,9 +110,32 @@ public class MyShopInsertController {
 				gb.setGuide_content(guide_content[i]);
 				list_guide.add(gb);
 			}
-		}			
-		System.out.println("###성공");
-		mav.setViewName(getPage);
+		}		
+		
+		int cnt = -1;
+		//cnt = myShopDao.insertReview(shop,list_guide);
+		
+		if(cnt>0) {
+			for(MultipartFile upload : shop.getUpload()) {
+				MultipartFile multi = upload;
+				
+				String uploadPath = servletContext.getRealPath("/resources/assets/image");
+				
+				File destination = new File(uploadPath+File.separator+multi.getOriginalFilename());
+				try {
+					multi.transferTo(destination);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			mav.setViewName(goToPage);
+			
+		}else {
+			mav.setViewName(getPage);
+		}
+		
 		return mav;
 	}
 	
