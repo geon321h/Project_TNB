@@ -93,6 +93,7 @@ public class MyShopInsertController {
 	        return mav;
 	    } 
 		
+		// 시설정보 및 가이드 형변환
 		shop.setShop_info(shop.getShop_info().replaceAll("\r\n","<br>"));
 		if(guide_title!=null) {
 			for(int i=0;i<guide_content.length;i++) {

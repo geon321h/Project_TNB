@@ -28,17 +28,17 @@
             <div class="content_area">
                 <form:form commandName="shop" method="post" action="insert_shop.mp" enctype="multipart/form-data">
                 <div class="shop_content_area shop_insert_area">
-                	<p class="info_title">숙소명</p>
+                	<p class="info_title">숙소명*</p>
                     <div class="info_content">
                         <input type="text" name="shop_name" class="shop_text_input" placeholder="숙소명을 입력해주세요. (최대 20자)" value="${shop.shop_name}">
-                        <p><form:errors path="shop_name" cssClass="err"></form:errors></p>
+                        <p class="info_err"><form:errors path="shop_name" cssClass="err"></form:errors></p>
                     </div>
-                	<p class="info_title">숙소 정보</p>
+                	<p class="info_title">숙소 정보*</p>
                     <div class="info_content">
                         <textarea name="shop_info" class="shop_textarea" placeholder="숙소 정보를 입력해주세요. (최대 100자)" >${shop.shop_info}</textarea>
-                        <p><form:errors path="shop_info" cssClass="err"></form:errors></p>
+                        <p class="info_err"><form:errors path="shop_info" cssClass="err"></form:errors></p>
                     </div>
-                	<p class="info_title">카테고리</p>
+                	<p class="info_title">카테고리*</p>
                     <div class="info_content">
                     	<c:forEach items="${list_category}" var="category">
 	                        <input type="radio" class="btn-check" name="category_id" value="${category.category_id}" 
@@ -46,7 +46,7 @@
 	                        <c:if test="${shop.category_id == category.category_id}"> checked </c:if> >
 	                        <label class="btn btn-outline-secondary category_btn" for="btn-check-outlined${category.category_id}">${category.category_name}</label>
                     	</c:forEach>
-                    	<p><form:errors path="category_id" cssClass="err"></form:errors></p>
+                    	<p class="info_err"><form:errors path="category_id" cssClass="err"></form:errors></p>
                     </div>
                 	<p class="info_title">서비스 및 부대시설</p>
                     <div class="info_content">
@@ -58,7 +58,7 @@
                     	</c:forEach>
                     	
                     </div>
-                	<p class="info_title">지역 및 주소</p>
+                	<p class="info_title">지역 및 주소*</p>
                     <div class="info_content">
                         <select class="form-select region_select" name="region" 
                         aria-label=".form-select-region">
@@ -69,22 +69,29 @@
 	                            >${region}</option>
                             </c:forEach>
                         </select>
-                            <p><form:errors path="region" cssClass="err"></form:errors></p>
+                            <p class="info_err"><form:errors path="region" cssClass="err"></form:errors></p>
                         <div class="address_area">
                             <input type="text" class="address_input" name="shop_address" id="sample6_address" placeholder="주소" value="${shop.shop_address}">
                             <input type="button" class="btn btn-secondary" onclick="sample6_execDaumPostcode()" value="주소 검색"><br>
-                            <p><form:errors path="shop_address" cssClass="err"></form:errors></p>
+                            <p class="info_err"><form:errors path="shop_address" cssClass="err"></form:errors></p>
                         </div>
                     </div>
                 </div>
                 <div class="shop_content_area shop_insert_area">
                     <div class="area_top">
-                        <p class="info_title pt-2">이미지</p>
-                        <input type="button" class="btn btn-secondary" onclick="image_add()" value="이미지 추가">
+                        <p class="info_title pt-2">이미지*</p>                        
+                        <div>
+                            <input type="button" class="btn btn-outline-secondary" onclick="image_delete()" value="이미지 삭제">
+                            <input type="button" class="btn btn-secondary" onclick="image_add()" value="이미지 추가">
+                        </div>
                     </div>
+                    <p class="">최소 1개이상의 이미지를 등록해주세요.</p><br>
                     <div class="image_area">
-                        
+                        <div class="file_area">
+                            <input type="file" name="upload">
+                        </div>
                     </div>
+                    <p class="err file_err"></p>
                 </div>
 
                 <div class="shop_content_area shop_insert_area">

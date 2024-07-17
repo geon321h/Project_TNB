@@ -286,8 +286,8 @@
     margin-bottom: 0px;
 }
 
-#content_container .info_content .err {
-    margin-top: 10px !important;
+#content_container .info_content .info_err {
+    margin-top: 10px ;
 }
 
 .shop_insert_area .shop_text_input {
@@ -387,6 +387,10 @@
     font-family: 'NanumSquare_R';
     color: var(--bs-gray-900); 
     resize: none;
+}
+
+.shop_insert_area .file_area input {
+    margin-bottom: 10px;
 }
 
 .content_area form .submit_btn {
