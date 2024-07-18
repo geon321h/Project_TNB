@@ -39,7 +39,7 @@
                           </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                          <div class="accordion-body row">
+                          <div class="accordion-body row gap-3">
                             <c:forEach items="${shop_image}" var="image">
                             	<div class="shop_img_box">
                             		<img src="<%=request.getContextPath()%>/resources/assets/image/${image}">
@@ -98,6 +98,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="controller_area text-end">
+                	<div class="button me-3" onclick="location.href='update_shop.mp?shop_id=${shop_info.shop_id}'">
+                    <p class="btnText">수정</p>
+                    <div class="btnTwo btnUpate">
+                      <p class="btnText2"><i class="bi bi-pencil"></i></p>
+                    </div>
+                 </div>
+                
+                <div class="button" onclick="deleteShopCheck(${shop_info.shop_id})">
+                    <p class="btnText">삭제</p>
+                    <div class="btnTwo btnDelete">
+                      <p class="btnText2"><i class="bi bi-x-lg"></i></p>
+                    </div>
+                 </div>
+                
+            	</div>
             </div>
         </div>
 

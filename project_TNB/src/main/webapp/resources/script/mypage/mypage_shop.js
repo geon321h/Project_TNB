@@ -116,7 +116,7 @@ function checkSubmit(){
 
     let file = document.querySelectorAll('.file_area input');
     for(var i=0; i<file.length; i++){
-        //console.log(file[i].value);
+        console.log(file[i].value);
         if(file[i].value.trim()==""){
             document.querySelector('.file_err').innerHTML = "모든 이미지를 등록하거나 사용하지않는 파일을 삭제해주세요.";
             file_check = true;
@@ -127,5 +127,28 @@ function checkSubmit(){
 
     if(file_check || guide_check){
         return false;
+    }
+}
+
+function deleteShopCheck(shop_id){
+    console.log(shop_id);
+    if(confirm("삭제하겠습니까?")){
+        location.href="delete_shop.mp?shop_id="+shop_id;
+        alert("삭제완료");
+	}
+
+}
+
+function deleteSaveImg(id){
+    const image_area = document.querySelector('.image_area');
+    document.querySelector('.save_img'+id).remove();
+    let save_length = $('.save_area').length;
+    console.log(save_length);
+    if(save_length==0){
+        image_area.removeChild(image_area.firstElementChild);
+    }
+    let file_length = $('.file_area').length;
+    if(file_length<1){
+        image_add();
     }
 }

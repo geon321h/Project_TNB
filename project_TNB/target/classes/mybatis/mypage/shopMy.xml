@@ -6,18 +6,12 @@
  <mapper namespace="mypage.model.ShopMy"> 
  	
  	<select id="getMyShop" resultType="myShop">
- 		SELECT T10.SHOP_ID,USER_ID,SHOP_NAME,SHOP_ADDRESS,GRADE,REVIEW_COUNT,REGION,PRICE,IMAGE,CATEGORY_NAME  
-		FROM (SELECT T12.SHOP_ID,USER_ID,SHOP_NAME,SHOP_ADDRESS,GRADE,REVIEW_COUNT,REGION,PRICE,CATEGORY_NAME 
-		      FROM(SELECT T11_1.SHOP_ID,CATEGORY_NAME, MIN(PRICE) PRICE
-		            FROM (SELECT T11_11.SHOP_ID,USER_ID,SHOP_NAME,SHOP_ADDRESS,GRADE,REVIEW_COUNT,REGION,CATEGORY_NAME 
-		                  FROM SHOP T11_11
-		                      ,CATEGORY T11_12
-		                  WHERE T11_11.CATEGORY_ID = T11_12.CATEGORY_ID) T11_1
-		                  ,SHOP_ROOM T11_2
-		            WHERE T11_1.SHOP_ID =  T11_2.SHOP_ID
-		            GROUP BY T11_1.SHOP_ID ,CATEGORY_NAME) T11
-		            ,SHOP T12
-		            WHERE T11.SHOP_ID = T12.SHOP_ID) T10 
+
+ 		SELECT T10.SHOP_ID,USER_ID,SHOP_NAME,SHOP_ADDRESS,GRADE,REVIEW_COUNT,REGION,IMAGE,CATEGORY_NAME  
+		FROM (SELECT T11.SHOP_ID,USER_ID,SHOP_NAME,SHOP_ADDRESS,GRADE,REVIEW_COUNT,REGION,CATEGORY_NAME 
+		                  FROM SHOP T11
+		                      ,CATEGORY T12
+		                  WHERE T11.CATEGORY_ID = T12.CATEGORY_ID) T10 
 		LEFT OUTER JOIN 
 		      (SELECT * 
 		       FROM SHOP_IMAGE 
@@ -37,6 +31,108 @@
 		ON T21.ROOM_ID = T22.ROOM_ID
 		WHERE T21.SHOP_ID = #{shop_id}
  	</select>
+ 	
+ 	<select id="getShopId" resultType="integer">
+ 		SELECT MAX(SHOP_ID)
+ 		FROM SHOP
+ 	</select>
+ 	
+ 	<select id="getShopImageId" resultType="integer">
+ 		SELECT NVL(MAX(SHOP_IMG_ID),0)+1 FROM SHOP_IMAGE WHERE SHOP_ID = #{shop_id}
+ 	</select>
+ 	
+ 	<select id="getShopGuideId" resultType="integer">
+ 		SELECT NVL(MAX(GUIDE_ID),0)+1 FROM SHOP_GUIDE WHERE SHOP_ID = #{shop_id}
+ 	</select>
+ 	
+ 	<insert id="insertShop">
+ 		INSERT INTO SHOP(SHOP_ID,USER_ID,SHOP_NAME,REGION,SHOP_ADDRESS,SHOP_INFO,CATEGORY_ID) 
+ 		VALUES (SHOP_SEQ.NEXTVAL,#{user_id},#{shop_name},#{region},#{shop_address},#{shop_info},#{category_id})
+ 	</insert>
+
+ 	<insert id="insertShopImage" parameterType="list">
+ 		<foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="SELECT 1 FROM DUAL">
+		 	INTO SHOP_IMAGE (
+		 										SHOP_IMG_ID,
+		 										SHOP_ID,IMAGE
+		 									)
+			VALUES (
+							#{item.shop_img_id},
+							#{item.shop_id},
+							#{item.image}
+			)
+		</foreach>	
+ 	</insert>
+
+ 	<insert id="insertShopGuide" parameterType="list">
+ 		<foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="SELECT 1 FROM DUAL">
+		 	INTO SHOP_GUIDE (
+		 										GUIDE_ID,
+		 										SHOP_ID,GUIDE_TITLE,GUIDE_CONTENT
+		 									)
+			VALUES (
+							#{item.guide_id},
+							#{item.shop_id},
+							#{item.guide_title},
+							#{item.guide_content}
+			)
+		</foreach>	
+ 	</insert>
+
+ 	<insert id="insertShopService"  parameterType="list">
+ 	 		<foreach collection="list" item="item" index="idx" separator=" " open="INSERT ALL" close="SELECT 1 FROM DUAL">
+		 	INTO SHOP_SERVICE (
+		 										SERVICE_ID,
+		 										SHOP_ID
+		 									)
+			VALUES (
+							#{item.service_id},
+							#{item.shop_id}
+			)
+		</foreach>	
+ 	</insert>
+ 	
+ 	<delete id="deleteShop">
+ 		DELETE SHOP WHERE SHOP_ID = #{shop_id}
+ 	</delete>
+ 	
+ 	<select id="getShopImage" resultType="myShop">
+ 		SELECT *
+		FROM SHOP_IMAGE
+		WHERE SHOP_ID = #{shop_id}
+ 	</select>
+ 	
+ 	<delete id="deleteShopImage">
+ 		DELETE SHOP_IMAGE 
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND SHOP_IMG_ID = #{shop_img_id}
+ 	</delete>
+ 	
+ 	<delete id="resetService">
+ 		DELETE SHOP_SERVICE
+ 		WHERE SHOP_ID = #{shop_id}
+ 	</delete>
+ 	
+ 	<delete id="deleteShopGuide">
+ 		DELETE SHOP_GUIDE
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND GUIDE_ID = #{guide_id}
+ 	</delete>
+ 	
+ 	<update id="updateShopGuide">
+ 		UPDATE SHOP_GUIDE
+ 		SET GUIDE_TITLE = #{guide_title} ,GUIDE_CONTENT= #{guide_content} 
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND GUIDE_ID = #{guide_id}
+ 	</update>
+ 	
+ 	<update id="updateShop">
+ 		UPDATE SHOP
+ 		SET SHOP_NAME= #{shop_name},REGION= #{region}
+ 		,SHOP_ADDRESS= #{shop_address}
+ 		,SHOP_INFO= #{shop_info},CATEGORY_ID= #{category_id}
+ 		WHERE SHOP_ID = #{shop_id}
+ 	</update>
  	
  </mapper>
  
