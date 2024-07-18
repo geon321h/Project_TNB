@@ -3,6 +3,7 @@ package mypage.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -10,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.model.MemberBean;
 import mypage.model.MyShopDao;
 import mypage.model.RoomReservationBean;
 import shop.model.CategoryBean;
@@ -36,6 +40,9 @@ public class MyShopInsertController {
 	
 	@Autowired
 	ShopDao shopDao;
+	
+	@Autowired
+	ServletContext servletContext;
 	
 	@RequestMapping(value = command, method = RequestMethod.GET)
 	public ModelAndView insertform() {
@@ -93,6 +100,7 @@ public class MyShopInsertController {
 	        return mav;
 	    } 
 		
+		// 시설정보 및 가이드 형변환
 		shop.setShop_info(shop.getShop_info().replaceAll("\r\n","<br>"));
 		if(guide_title!=null) {
 			for(int i=0;i<guide_content.length;i++) {
@@ -104,7 +112,6 @@ public class MyShopInsertController {
 			}
 		}			
 		System.out.println("###성공");
-		mav.setViewName(getPage);
 		return mav;
 	}
 	

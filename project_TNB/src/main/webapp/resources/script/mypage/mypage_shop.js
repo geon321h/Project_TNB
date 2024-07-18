@@ -71,17 +71,84 @@ function guide_delete(){
     guide_area.removeChild(guide_area.lastElementChild);
 }
 
+function image_add() {
+
+    const file_div = document.createElement("div");
+    file_div.className = "file_area";
+    file_div.innerHTML = `<input type="file" name="upload">`;
+    document.querySelector('.image_area').append(file_div);
+
+}
+
+function image_delete(){
+    const image_area = document.querySelector('.image_area');
+    let file_length = $('.file_area').length;
+    if(file_length<=1){
+        alert("최소 1개이상의 이미지를 등록해주세요.");
+    }else{
+        image_area.removeChild(image_area.lastElementChild);
+    }
+}
+
+
 function checkSubmit(){
+    let guide_check = false;
+    let file_check = false;
+
     let guide_length = $('.guide_content').length;
     for(var i=0; i<guide_length; i++){
-        let guide_title = document.querySelector('.guideNum'+i+' input').value;
-        let guide_content = document.querySelector('.guideNum'+i+' textarea').value;
+        let guide_title = document.querySelector('.guideNum'+i+' input');
+        let guide_content = document.querySelector('.guideNum'+i+' textarea');
         //console.log(guide_title);
         //console.log(guide_content);
-        if(guide_title.trim()=="" || guide_content.trim()==""){
+        if(guide_title.value.trim()=="" ){
             document.querySelector('.guide_err').innerHTML = "모든 이용정보를 입력해주세요.";
-            return false;
+            guide_title.focus();
+            guide_check = true;
+        }else if(guide_content.value.trim()==""){
+            document.querySelector('.guide_err').innerHTML = "모든 이용정보를 입력해주세요.";
+            guide_content.focus();
+            guide_check = true;
+        }else{
+            document.querySelector('.guide_err').innerHTML = "";
         }
     }
-    document.querySelector('.guide_err').innerHTML = "";
+
+    let file = document.querySelectorAll('.file_area input');
+    for(var i=0; i<file.length; i++){
+        console.log(file[i].value);
+        if(file[i].value.trim()==""){
+            document.querySelector('.file_err').innerHTML = "모든 이미지를 등록하거나 사용하지않는 파일을 삭제해주세요.";
+            file_check = true;
+        }else{
+            document.querySelector('.file_err').innerHTML = "";
+        }
+    }
+
+    if(file_check || guide_check){
+        return false;
+    }
+}
+
+function deleteShopCheck(shop_id){
+    console.log(shop_id);
+    if(confirm("삭제하겠습니까?")){
+        location.href="delete_shop.mp?shop_id="+shop_id;
+        alert("삭제완료");
+	}
+
+}
+
+function deleteSaveImg(id){
+    const image_area = document.querySelector('.image_area');
+    document.querySelector('.save_img'+id).remove();
+    let save_length = $('.save_area').length;
+    console.log(save_length);
+    if(save_length==0){
+        image_area.removeChild(image_area.firstElementChild);
+    }
+    let file_length = $('.file_area').length;
+    if(file_length<1){
+        image_add();
+    }
 }

@@ -59,7 +59,7 @@ public class ReviewUpdateController {
 	
 	@RequestMapping(value = command, method = RequestMethod.POST)
 	public ModelAndView update(			
-			@ModelAttribute("reservation") @Valid RoomReservationBean reservation,			 
+			@ModelAttribute("reservation") RoomReservationBean reservation,			 
 			@ModelAttribute("review") @Valid ReviewBean review,
 			BindingResult result) {
 		ModelAndView mav = new ModelAndView();

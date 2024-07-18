@@ -1,14 +1,16 @@
 package utility;
 
-public class Paging {
+import shop.model.SearchBean;
+
+public class Shop_Paging {
 	//페이징 관련 변수	
 	private int totalCount = 0 ; //총 레코드 건수
 	private int totalPage = 0 ; //전체 페이지 수
 	private int pageNumber = 0 ; //보여줄 페이지 번호
-	private int pageSize = 0 ; //한 페이지에 보여줄 건수(레코드 갯수)
+	private int pageSize = 0 ; //한 페이지에 보여줄 건수
 	private int beginRow = 0 ; //현재 페이지의 시작 행
 	private int endRow = 0 ; //현재 페이지의 끝 행
-	private int pageCount = 3 ; // 한 화면에 보여줄 페이지 링크 수 (페이지 갯수)
+	private int pageCount = 5 ; // 한 화면에 보여줄 페이지 링크 수 (페이지 갯수)
 	private int beginPage = 0 ; //페이징 처리 시작 페이지 번호
 	private int endPage = 0 ; //페이징 처리 끝 페이지 번호
 	private int offset = 0 ;
@@ -18,7 +20,7 @@ public class Paging {
 	
 	//검색을 위한 변수 추가
 	private String whatColumn = "" ; //검색 모드(작성자, 글제목, 전체 검색은 all) 등등
-	private String keyword = "" ; //검색할 단어 
+	private SearchBean search = null ; //검색할 단어 
 
 	public int getTotalCount() {
 		return totalCount;
@@ -29,7 +31,7 @@ public class Paging {
 		this.totalCount = totalCount;
 	}
 
-  
+
 	public int getTotalPage() {
 		return totalPage;
 	}
@@ -141,7 +143,7 @@ public class Paging {
 
 
 	public String getPagingHtml() {
-		System.out.println("pagingHtml:"+pagingHtml);
+		//System.out.println("pagingHtml:"+pagingHtml);
 		
 		return pagingHtml;
 //		pagingHtml:
@@ -164,52 +166,51 @@ public class Paging {
 		this.whatColumn = whatColumn;
 	}
 
+	
 
-	public String getKeyword() {
-		return keyword;
+	public SearchBean getSearch() {
+		return search;
 	}
 
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setSearch(SearchBean search) {
+		this.search = search;
 	}
 
 
-	public Paging(
+	public Shop_Paging(
 			String _pageNumber, 
 			String _pageSize,  
 			int totalCount,
 			String url, 
-			String whatColumn, 
-			String keyword) {		
+			String whatColumn) {		
 
 		if(  _pageNumber == null || _pageNumber.equals("null") || _pageNumber.equals("")  ){
-			System.out.println("_pageNumber:"+_pageNumber); // null
-			_pageNumber = "1" ; //null이면 1페이지가 보이도록하자 그다음 페이지로 넘어간다
+			//System.out.println("_pageNumber:"+_pageNumber); 
+			_pageNumber = "1" ;
 		}
+ 
 		this.pageNumber = Integer.parseInt( _pageNumber ) ; 
 
 		if( _pageSize == null || _pageSize.equals("null") || _pageSize.equals("") ){
-			_pageSize = "10" ; // 한 페이지에 보여줄 레코드 갯수
+			_pageSize = "2" ; // 한 페이지에 보여줄 레코드 갯수
 		}		
 		this.pageSize = Integer.parseInt( _pageSize ) ;
 		
 		this.limit = pageSize ; // 한 페이지에 보여줄 레코드 갯수
-     //limit 나 pageSize 나 똑같은 의미임 
+
 		this.totalCount = totalCount ; 
 
 		this.totalPage = (int)Math.ceil((double)this.totalCount / this.pageSize) ;
 		
 		this.beginRow = ( this.pageNumber - 1 )  * this.pageSize  + 1 ;
-		//한페이지에 두개씩띄우기 때문에, 1페이지 2개 2페이지 두개 3페이지 2개 내가 3페이지에 띄우고 싶으면 5,6번 두개
 		this.endRow =  this.pageNumber * this.pageSize ;
 		// pageNumber가 2이면 beginRow=6, endRow=10
 		
-		if( this.pageNumber > this.totalPage ){ 
-			//삭제할때 필요한작업 삭제를하고 보던페이지를 보려고하는데 페이지는 삭제가되었으니
+		if( this.pageNumber > this.totalPage ){
 			this.pageNumber = this.totalPage ;
-			//바로앞 페이지로 넘ㄱ어갈수있게 설정해주는것
 		}
+		//System.out.println("this.pageNumber0-2:"+this.pageNumber); 
 		
 		this.offset = ( pageNumber - 1 ) * pageSize ; 
 		/*offset : 
@@ -226,73 +227,59 @@ public class Paging {
 		/*pageCount=10 : 한 화면에 보일 페이지 수,
 		pageNumber(현재 클릭한 페이지 수)가 12이면 beginPage = 11이 되고, endPage=20이 된다. */
 		
-		System.out.println("pageNumber:"+pageNumber+"/totalPage:"+totalPage);	
+		//System.out.println("pageNumber:"+pageNumber+"/totalPage:"+totalPage);	
 		
 		if( this.endPage > this.totalPage ){
 			this.endPage = this.totalPage ;
 		}
 		
-		System.out.println("pageNumber2:"+pageNumber+"/totalPage2:"+totalPage);	
+		//System.out.println("pageNumber2:"+pageNumber+"/totalPage2:"+totalPage);	
 		this.url = url ; //  /ex/list.ab
 		this.whatColumn = whatColumn ;
-		this.keyword = keyword ;
-		System.out.println("whatColumn:"+whatColumn+"/keyword:"+keyword);
-		
+		//this.search = search ;
+		//System.out.println("whatColumn:"+whatColumn+"/keyword:"+keyword);
 		this.pagingHtml = getPagingHtml(url) ;
-	//맨처음 이전 123[다음] 맨끝
 	
-	}//생성자 끝 
+	}
 	
 	private String getPagingHtml( String url ){ //페이징 문자열을 만든다.
-		//맨처음 // 이전 이런것들을 만들어주는게 getPaginHtml 메서드임
-		System.out.println("getPagingHtml url:"+url);// /ex/list.ab
-	
 		
 		String result = "" ;
 		//added_param 변수 : 검색 관련하여 추가되는 파라미터 리스트
-		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + keyword ; 
-		// &whatColumn=singer&keyword=아 // null일수도 있고 넘어온값일수도있다
+//		String added_param = "&whatColumn=" + whatColumn + "&keyword=" + search.getKeyword()
+//		+ "&day1=" + search.getDay1()+ "&day2=" + search.getDay2()
+//		+ "&people=" + search.getPeople()+ "&category_id=" + search.getCategory_id()
+//		+ "&price_range=" + search.getPrice_range() + "&service=" + search.getService() ;
 		
 		
 		if (this.beginPage != 1) { // 앞쪽, pageSize:한 화면에 보이는 레코드 수
 			// 처음 목록보기를 하면 pageNumber는 1이 되고 beginPage도 1이 된다. 
-			result += "&nbsp;<a href='" + url  
-					+ "?pageNumber=" + ( 1 ) + "&pageSize=" + this.pageSize 
-					+ added_param + "'>맨 처음</a>&nbsp;" ;
-			result += "&nbsp;<a href='" + url 
-					+ "?pageNumber=" + (this.beginPage - 1 ) + "&pageSize=" + this.pageSize 
-					+ added_param + "'>이전</a>&nbsp;" ;
+
+			result += "&nbsp;<a href='javascript:searchPage("+(this.beginPage + 1 )+")'>이전</a>&nbsp;" ;
 		}
 		
 		//가운데
 		for (int i = this.beginPage; i <= this.endPage ; i++) {
 			if ( i == this.pageNumber ) {
-				result += "&nbsp;<font color='red'>" + i + "</font>&nbsp;"	;
+				result += "&nbsp;<font color='#80B156'>" + i + "</font>&nbsp;"	;
 						
 			} else {
-				result += "&nbsp;<a href='" + url   
-						+ "?pageNumber=" + i + "&pageSize=" + this.pageSize 
-						+ added_param + "'>" + i + "</a>&nbsp;" ;
+				result += "&nbsp;<a href='javascript:searchPage("+i+")'>" + i + "</a>&nbsp;" ;
 				
 			}
 		}
 		
-		System.out.println("result:"+result);
-		System.out.println();
+		// System.out.println("result:"+result);
+		// System.out.println();
 		// result:&nbsp;<a href='/ex/list.ab?pageNumber=1&pageSize=2&whatColumn=null&keyword=null'>1</a>&nbsp;&nbsp;<font color='red'>2</font>&nbsp;&nbsp;<a href='/ex/list.ab?pageNumber=3&pageSize=2&whatColumn=null&keyword=null'>3</a>&nbsp;
 		
 		if ( this.endPage != this.totalPage) { // 뒤쪽
 			// endPage:지금 보는 페이지의 끝(지금 보는 페이지가 13이라면 endPage는 20), totalPage:전체 페이지수
 			
-			result += "&nbsp;<a href='" + url  
-					+ "?pageNumber=" + (this.endPage + 1 ) + "&pageSize=" + this.pageSize 
-					+ added_param + "'>다음</a>&nbsp;" ;
-			
-			result += "&nbsp;<a href='" + url  
-					+ "?pageNumber=" + (this.totalPage ) + "&pageSize=" + this.pageSize 
-					+ added_param + "'>맨 끝</a>&nbsp;" ;
+			result += "&nbsp;<a href='javascript:searchPage("+(this.endPage + 1 )+")'>다음</a>&nbsp;" ;
+
 		}		
-		System.out.println("result2:"+result);
+		//System.out.println("result2:"+result);
 		// result2 : <a href='/ex/list.ab?pageNumber=1&pageSize=2'>맨 처음</a>&nbsp;&nbsp;<a href='/ex/list.ab?pageNumber=3&pageSize=2&whatColumn=null&keyword=null'>이전</a>&nbsp;&nbsp;<font color='red'>4</font>&nbsp;&nbsp;<a href='/ex/list.ab?pageNumber=5&pageSize=2&whatColumn=null&keyword=null'>5</a>&nbsp;
 		
 		return result ;

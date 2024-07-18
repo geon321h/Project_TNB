@@ -16,7 +16,7 @@ function insertImg(){
     if(save_length != null && save_length > 0){
         file_length = file_length + save_length;
     }
-    console.log(file_length);
+    //console.log(file_length);
 
     if(file_length<10){
         const file_div = document.createElement("div");

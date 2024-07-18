@@ -24,7 +24,7 @@ import shop.model.CategoryBean;
 import shop.model.SearchBean;
 import shop.model.ShopBean;
 import shop.model.ShopDao;
-import utility.Paging;
+import utility.Shop_Paging;
 
 @Controller
 public class Shop_Search_Controller {
@@ -70,7 +70,7 @@ public class Shop_Search_Controller {
 			String url = request.getContextPath()+ this.command;
 			int count = shopDao.search_count(map);
 			
-			Paging pageInfo = new Paging(pageNumber, null, count, url, whatColumn);
+			Shop_Paging pageInfo = new Shop_Paging(pageNumber, null, count, url, whatColumn);
 			List<ShopBean> list_shop = shopDao.search_shop(pageInfo, map);
 			List<SearchBean> list_service = shopDao.getServiceList();
 			List<CategoryBean> list_category = shopDao.getCategoryList();

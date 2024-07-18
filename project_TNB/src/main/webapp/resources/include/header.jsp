@@ -35,7 +35,7 @@
 							<img class="profile_img" src="<%=request.getContextPath()%>/resources/assets/image/profile_standard.svg" >
 						</div>
 						<div class="profile_text">
-							<p class="profile_name">${sessionScope.loginInfo.user_name}</p>
+							<p class="profile_name">${sessionScope.loginInfo.user_nickname}</p>
 							<p class="profile_email">${sessionScope.loginInfo.user_email}</p>
 						</div>
 					</div>
