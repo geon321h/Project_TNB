@@ -26,7 +26,8 @@
                 </div>
             </div>
             <div class="content_area">
-                <form:form commandName="shop" method="post" action="insert_shop.mp" enctype="multipart/form-data">
+                <form:form commandName="shop" method="post" action="update_shop.mp" enctype="multipart/form-data">
+                <input type="hidden" value="${shop.shop_id}" name="shop_id">
                 <div class="shop_content_area shop_insert_area">
                 	<p class="info_title">숙소명*</p>
                     <div class="info_content">
@@ -87,8 +88,14 @@
                     </div>
                     <p class="">최소 1개이상의 이미지를 등록해주세요.</p><br>
                     <div class="image_area">
-                        <div class="file_area">
-                            <input type="file" name="upload">
+                        <div class="file_area row">
+                            <c:forEach items="${shop_image_list}" var="shop_img">
+                                <div class="save_img${shop_img.shop_img_id} save_area">
+                                    <img src="<%=request.getContextPath()%>/resources/assets/image/${shop_img.image}" >
+                                    <input type="hidden" value="${shop_img.shop_img_id}" name="save_image">
+                                    <button onclick="deleteSaveImg(${shop_img.shop_img_id})"><i class="bi bi-trash-fill"></i></button>
+                                </div>                                			
+                            </c:forEach>
                         </div>
                     </div>
                     <p class="err file_err"></p>
@@ -106,6 +113,7 @@
                         <c:if test="${fn:length(list_guide)>0}">
                         	<c:forEach items="${list_guide}" var="guideMy" varStatus="vs">
 		                        <div class="guide_content guideNum${vs.index}">
+			                        <input type="text" name="guide_id" value="${guideMy.guide_id}"> 
 		                            <p>제목</p> <input type="text" name="guide_title" placeholder="이용정보 소제목을 정해주세요. (최대 30자)" value="${guideMy.guide_title}">
 		                            <p>내용</p> <textarea name="guide_content" placeholder="상세 내용을 입력해주세요. (최대 200자)">${guideMy.guide_content}</textarea>
 		                        </div>

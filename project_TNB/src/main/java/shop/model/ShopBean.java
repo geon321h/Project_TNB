@@ -23,7 +23,7 @@ public class ShopBean {
 	private String shop_address;
 	
 	@NotBlank(message = "시설소개를 입력해주세요.")
-	@Length(max = 100,message = "시설명은 20자 이내로 입력해주세요")
+	@Length(max = 100,message = "시설소개는 20자 이내로 입력해주세요")
 	private String shop_info;
 	private double grade;
 	private int review_count;
@@ -36,11 +36,13 @@ public class ShopBean {
 	private int price;
 	private String image;
 	private String category_name;
+	private String service_name;
 	private int service_id;
+	private int shop_img_id;
 	
 	private String save_image;
 	private MultipartFile[] upload;
-	private String[] image_name;
+	private String[] image_name = new String[10];
 	
 	public MultipartFile[] getUpload() {
 		return upload;
@@ -50,10 +52,9 @@ public class ShopBean {
 		//System.out.println("setUpload");
 		this.upload = upload;
 		if (this.upload.length > 0 ) {
-			image = "";
 			for(int i=0;i<upload.length;i++) {
 				//System.out.println("###upload.getOriginalFilename():"+upload[i].getOriginalFilename()); // 이미지명
-				image_name[i] += upload[i].getOriginalFilename();
+				image_name[i] = upload[i].getOriginalFilename();
 			}
 		}
 	}	 
@@ -158,5 +159,21 @@ public class ShopBean {
 	public void setService_id(int service_id) {
 		this.service_id = service_id;
 	}
+
+	public String getService_name() {
+		return service_name;
+	}
+	public void setService_name(String service_name) {
+		this.service_name = service_name;
+	}
+
+	public int getShop_img_id() {
+		return shop_img_id;
+	}
+
+	public void setShop_img_id(int shop_img_id) {
+		this.shop_img_id = shop_img_id;
+	}
+	
 	
 }

@@ -125,7 +125,7 @@
  	</select>
  	
  	<select id="getShopService" resultType="service">
-		SELECT SERVICE_NAME,ICON
+		SELECT SERVICE_NAME,ICON,T10.SERVICE_ID
 		FROM (SELECT * 
 		      FROM SHOP_SERVICE 
 		      WHERE SHOP_ID = #{shop_id}) T10,

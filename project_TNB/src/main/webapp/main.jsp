@@ -81,15 +81,14 @@
 					list_div.empty();
 					$.each(response, function(index, shop) { 	
 						list = "";
-						console.log(shop);
-						console.log(index);
-						console.log(shop.shop_id);
-						console.log(shop.category_name);
-						console.log(shop.shop_name);
+						// console.log(shop);
+						// console.log(index);
+						// console.log(shop.shop_id);
+						// console.log(shop.category_name);
+						// console.log(shop.shop_name);
 						let grade = Number(shop.grade).toFixed(1);
 						let price = Number(shop.price).toLocaleString('ko-KR');
-						let abc = shop.image;
-						console.log("abc:"+abc)				
+						let abc = shop.image;		
 						list += '<div class="content_box" onclick="viewPage('+shop.shop_id+',`'+shop.shop_name+'`)">'
 						list +=		`<div class="content_img">`
 						list +=		'<img src="<%=request.getContextPath()%>/resources/assets/image/'+abc+'">'

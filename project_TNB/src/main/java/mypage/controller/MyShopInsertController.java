@@ -3,22 +3,26 @@ package mypage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.model.MemberBean;
 import mypage.model.MyShopDao;
 import mypage.model.RoomReservationBean;
 import shop.model.CategoryBean;
@@ -61,7 +65,8 @@ public class MyShopInsertController {
 	public ModelAndView insert(
 			@ModelAttribute("shop") @Valid ShopBean shop,
 			BindingResult result,
-			HttpServletRequest request) { 
+			HttpServletRequest request,
+			HttpSession session) { 
 		ModelAndView mav = new ModelAndView();
 		
 		// 가이드는 ,를 포함할 수 있기에 따로 배열로 받아준다.
@@ -69,14 +74,18 @@ public class MyShopInsertController {
 		String[] guide_content = request.getParameterValues("guide_content");
 		List<GuideBean> list_guide = new ArrayList<GuideBean>();
 
-        
-		//System.out.println("getShop_name: "+shop.getShop_name());
-		//System.out.println("getShop_info: "+shop.getShop_info());
-		//System.out.println("getCategory_id: "+shop.getCategory_id());
-		//System.out.println("getCategory_name: "+shop.getCategory_name());
-		//System.out.println("getRegion	: "+shop.getRegion());
-		//System.out.println("getShop_address: "+shop.getShop_address());
-		System.out.println("guide_title:"+guide_title);
+		/*
+		 * System.out.println("getShop_name: "+shop.getShop_name());
+		 * System.out.println("getShop_info: "+shop.getShop_info());
+		 * System.out.println("getCategory_id: "+shop.getCategory_id());
+		 * System.out.println("getService_name: "+shop.getService_name());
+		 * System.out.println("getRegion	: "+shop.getRegion());
+		 * System.out.println("getShop_address: "+shop.getShop_address());
+		 * 
+		 * for(int i=0;i<shop.getUpload().length;i++) {
+		 * System.out.println("##upload"+i+": "+shop.getUpload()[i]);
+		 * System.out.println("##shop_image"+i+": "+shop.getImage_name()[i]); }
+		 */		
 		
 		if (result.hasErrors()) {
 			System.out.println("### shop insert 에러");
@@ -112,9 +121,38 @@ public class MyShopInsertController {
 			}
 		}		
 		
-		int cnt = -1;
-		//cnt = myShopDao.insertReview(shop,list_guide);
+		// 유저 정보 추가
+		if(session.getAttribute("loginInfo")!=null) {
+			MemberBean member = (MemberBean)session.getAttribute("loginInfo");
+			shop.setUser_id(member.getUser_id());			
+		}else {
+			shop.setUser_id(1);
+		}
 		
+		int cnt = -1;
+		cnt = myShopDao.insertShop(shop,list_guide); 
+		
+//		if(list_guide.size()>0) {
+//			int abc =1;
+//			for(GuideBean gb : list_guide){
+//				gb.setGuide_id(abc++);
+//				gb.setShop_id(1);				
+//			}
+//			for(GuideBean gb : list_guide){
+//				System.out.println("gb_guide:"+gb.getGuide_id());
+//				System.out.println("gb_shop:"+gb.getShop_id());
+//			}
+//		}
+//		
+//		String[] serviceFull = shop.getService_name().split(",");
+//		for(String service : serviceFull) {
+//			service = service.substring(0,service.indexOf("_"));
+//			System.out.println("service1:"+service);
+//		}
+//		for(String service : serviceFull) {
+//			System.out.println("service2:"+service);
+//		}
+
 		if(cnt>0) {
 			for(MultipartFile upload : shop.getUpload()) {
 				MultipartFile multi = upload;
@@ -133,6 +171,11 @@ public class MyShopInsertController {
 			mav.setViewName(goToPage);
 			
 		}else {
+	        List<SearchBean> list_service = shopDao.getServiceList();
+	        List<CategoryBean> list_category = shopDao.getCategoryList();
+			
+			mav.addObject("list_service",list_service);
+			mav.addObject("list_category",list_category);
 			mav.setViewName(getPage);
 		}
 		
