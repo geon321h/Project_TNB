@@ -97,19 +97,19 @@ public class MyShopUpdateController {
 		String[] save_image = request.getParameterValues("save_image");
 		List<ShopBean> shop_image_list = myShopDao.getShopImage(String.valueOf(shop.getShop_id()));
 		
-		 System.out.println("getShop_name: "+shop.getShop_name());
-		 System.out.println("getShop_info: "+shop.getShop_info());
-		 System.out.println("getCategory_id: "+shop.getCategory_id());
-		 System.out.println("getService_name: "+shop.getService_name());
-		 System.out.println("getRegion	: "+shop.getRegion());
-		 System.out.println("getShop_address: "+shop.getShop_address());
-		 
-		 if(shop.getUpload()!=null) {
-			 for(int i=0;i<shop.getUpload().length;i++) {
-				 System.out.println("##upload"+i+": "+shop.getUpload()[i]);
-				 System.out.println("##shop_image"+i+": "+shop.getImage_name()[i]); 
-			 }			 
-		 }
+//		 System.out.println("getShop_name: "+shop.getShop_name());
+//		 System.out.println("getShop_info: "+shop.getShop_info());
+//		 System.out.println("getCategory_id: "+shop.getCategory_id());
+//		 System.out.println("getService_name: "+shop.getService_name());
+//		 System.out.println("getRegion	: "+shop.getRegion());
+//		 System.out.println("getShop_address: "+shop.getShop_address());
+//		 
+//		 if(shop.getUpload()!=null) {
+//			 for(int i=0;i<shop.getUpload().length;i++) {
+//				 System.out.println("##upload"+i+": "+shop.getUpload()[i]);
+//				 System.out.println("##shop_image"+i+": "+shop.getImage_name()[i]); 
+//			 }			 
+//		 }
 		 
 		
 		if (result.hasErrors()) {
@@ -120,7 +120,7 @@ public class MyShopUpdateController {
 	        if(guide_title != null) {
 	        	for(int i=0;i<guide_title.length;i++) {
 	        		GuideBean gb = new GuideBean();
-	        		if(guide_id != null) {
+	        		if(guide_id != null && !guide_id.equals("0")) {
 	        			if(guide_id.length > i){
 	        				gb.setGuide_id(Integer.parseInt(guide_id[i]));	        				        				
 	        			}	        			
@@ -139,15 +139,16 @@ public class MyShopUpdateController {
 	        return mav;
 	    } 
 		
-		System.out.println("###성공");
 		
 		shop.setShop_info(shop.getShop_info().replaceAll("\r\n","<br>"));
 		if(guide_title!=null) {
 			for(int i=0;i<guide_content.length;i++) {
 				guide_content[i] = guide_content[i].replaceAll("\r\n","<br>");							
 				GuideBean gb = new GuideBean();
-        		if(guide_id.length > i){
-    				gb.setGuide_id(Integer.parseInt(guide_id[i]));	        				        				
+        		if(guide_id != null && !guide_id.equals("0")) {
+        			if(guide_id.length > i){
+        				gb.setGuide_id(Integer.parseInt(guide_id[i]));	        				        				
+        			}	        			
         		}
 				gb.setGuide_title(guide_title[i]);
 				gb.setGuide_content(guide_content[i]);
@@ -177,9 +178,11 @@ public class MyShopUpdateController {
 			
 			for(ShopBean image : shop_image_list) {
 				Boolean flag = false;
-				for(String save : save_image) {
-					if(image.getShop_img_id() == Integer.parseInt(save)) {
-						flag =true;
+				if(save_image != null) {
+					for(String save : save_image) {
+						if(image.getShop_img_id() == Integer.parseInt(save)) {
+							flag =true;
+						}					
 					}					
 				}
 				

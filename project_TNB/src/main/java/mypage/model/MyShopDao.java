@@ -122,34 +122,39 @@ public class MyShopDao {
 		}
 		
 		// 3. 시설정보 테이블에 시설정보 추가
-		if(list_guide.size()>0) {
-			List<GuideBean> insert_guide = new ArrayList<GuideBean>();
-			int guide_id = sqlSessionTemplate.selectOne(namespace+".getShopGuideId",shop_id);
-			for(GuideBean gb : list_guide){
-				gb.setShop_id(shop_id);	
-				if(gb.getGuide_id() > 0) {
-					System.out.println("###dao id"+gb.getGuide_id());
-					boolean flag = false;
-					for(GuideBean save : save_guide) {
-						if(gb.getGuide_id() == save.getGuide_id()) {
-							flag = true;
-						}
-					}
-					if (flag) {
+		List<GuideBean> insert_guide = new ArrayList<GuideBean>();
+		int guide_id = sqlSessionTemplate.selectOne(namespace+".getShopGuideId",shop_id);
+		for(GuideBean save_gb : save_guide) {
+			boolean flag = false;
+			if(list_guide != null ) {
+				for(GuideBean gb : list_guide){
+					if(gb.getGuide_id() == save_gb.getGuide_id()) {
+						//System.out.println("###수정 dao id"+save_gb.getGuide_id());
+						gb.setGuide_id(save_gb.getGuide_id());
+						gb.setShop_id(shop_id);
 						sqlSessionTemplate.update(namespace+".updateShopGuide",gb);
-					}else {
-						sqlSessionTemplate.delete(namespace+".deleteShopGuide",gb);
+						flag =true;
 					}
-					
-				}else {
+				}				
+			}
+			if(flag == false) {
+				//System.out.println("###삭제 dao id"+save_gb.getGuide_id());
+				sqlSessionTemplate.delete(namespace+".deleteShopGuide",save_gb);
+			}
+		}
+		if(list_guide != null ) {
+			for(GuideBean gb : list_guide){
+				if(gb.getGuide_id() < 1) {
+					//System.out.println("###추가 dao id"+gb.getGuide_id());
+					gb.setShop_id(shop.getShop_id());	
 					gb.setGuide_id(guide_id);
 					guide_id++;		
 					insert_guide.add(gb);
-				}				
+				}
 			}
-			if(insert_guide.size()>0) {
-				sqlSessionTemplate.insert(namespace+".insertShopGuide",insert_guide);				
-			}
+		}
+		if(insert_guide.size()>0) {
+			sqlSessionTemplate.insert(namespace+".insertShopGuide",insert_guide);				
 		}
 		
 		// 4. 서비스 테이블에 서비스 추가

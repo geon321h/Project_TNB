@@ -289,13 +289,8 @@
     margin-bottom: 0px;
 }
 
-<<<<<<< HEAD
-#content_container .info_content .err {
-    margin-top: 10px !important;
-=======
 #content_container .info_content .info_err {
     margin-top: 10px ;
->>>>>>> refs/remotes/origin/main
 }
 
 .shop_insert_area .shop_text_input {
