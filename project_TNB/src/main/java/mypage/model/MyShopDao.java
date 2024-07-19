@@ -173,6 +173,29 @@ public class MyShopDao {
 		
 		return cnt;
 	}
+
+	public int insertRoom(ShopRoomBean room) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.insert(namespace+".insertRoom",room);
+
+		// 2. room 이미지 넣기
+		int room_id = sqlSessionTemplate.selectOne(namespace+".getRoomId",room);
+		int room_img_id = sqlSessionTemplate.selectOne(namespace+".getRoomImageId",room);
+		
+		List<ShopRoomBean> list_image = new ArrayList<ShopRoomBean>();
+		for(int i=0;i<room.getUpload().length;i++) { // image_name[] 대신 갯수가 정해진 getUpload 사용
+			ShopRoomBean rb = new ShopRoomBean();
+			rb.setImage(room.getImage_name()[i]);
+			rb.setShop_id(room.getShop_id());
+			rb.setRoom_id(room_id);
+			rb.setRoom_img_id(room_img_id);
+			list_image.add(rb);
+			room_img_id++;
+		}		
+		sqlSessionTemplate.insert(namespace+".insertRoomImage",list_image);
+		
+		return cnt;
+	}
 	
 	
 	

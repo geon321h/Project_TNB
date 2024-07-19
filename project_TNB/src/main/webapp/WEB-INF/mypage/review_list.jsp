@@ -8,13 +8,11 @@
     <div class="container-fruid min-vh-100 " id="content_container">
 
         <div class="content_mypage container">
-            <div class="aside_mypage">
-                <div class="aside_menu_mypage">
-                    <a href="myshop_list.mp">시설 관리</a>
-                    <a href="review_list.mp">내 리뷰</a>
-                </div>
-            </div>
+        
+             <%@include file="/resources/include/my_aside.jsp" %>
+             
             <div class="content_area">
+            
                 <h2>리뷰 내역</h2>
                 <form action="review_insert.mp" method="get">
                 	<input type="hidden" name="shop_name" value="서울신라호텔">
@@ -38,6 +36,7 @@
                         </tr>
                     </c:forEach>
                 </table>
+                
             </div>
         </div>
 

@@ -12,6 +12,12 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    document.querySelectorAll("button[data-scroll='shop_review']").forEach(function(button) {
+        button.addEventListener('click', function() {
+            scrollToElement('#shop_review', 150);
+        });
+    });
+
 
     function scrollToElement(selector, offset) {
         const element = document.querySelector(selector);

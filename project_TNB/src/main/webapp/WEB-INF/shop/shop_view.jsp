@@ -65,7 +65,7 @@
 									<div class="room_price_area">
 										<p><fmt:formatNumber value="${room.price}" pattern="#,###" /> 원<span>/1박당</span></p>
 										<c:if test="${room.room_count==0}"><p>다른 날짜 확인</p></c:if>
-										<c:if test="${room.room_count>0}"><button>객실예약</button></c:if>
+										<c:if test="${room.room_count>0}"><a href = "roomReservation.rv?shop_id=${param.shop_id}&room_id=${room.room_id}&room_checkin_date=${search.day1}&room_checkout_date=${search.day2}&room_price=${room.price}&room_quantity=${room.max_people}"><button>객실예약</button></a></c:if>
 									</div>
 								</div>
 							</div>
@@ -78,7 +78,7 @@
 					<p class="guide_title">${guide.guide_title}</p>
 					<p class="guide_content">${guide.guide_content}</p>
 				</c:forEach>
-				<div class="review_sort">
+				<div class="review_sort" id="shop_review">
 					<p  class="grade_content"><img src="<%=request.getContextPath()%>/resources/assets/icon/Star_icon.png"><fmt:formatNumber value="${shop_info.grade}" pattern="#.#" /><span>${shop_info.review_count}명 리뷰</span></p>
 					<label class="reviewColumn dropdown-toggle"  id="dropdown_reviewColumn" data-bs-toggle="dropdown" aria-expanded="false">
 					<img src="<%=request.getContextPath()%>/resources/assets/icon/sort_icon.svg">
@@ -168,7 +168,7 @@
 				<div class="nav_area">
 					<button data-scroll="shop_info">숙소정보</button>
 					<button data-scroll="shop_room">객실</button>
-					<button>리뷰</button>
+					<button data-scroll="shop_review">리뷰</button>
 					<button data-scroll="shop_room">객실예약</button>
 				</div>
 			</div>

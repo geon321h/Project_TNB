@@ -10,11 +10,7 @@
 
 
         <div class="content_mypage container">
-            <div class="aside_mypage">
-                <div class="aside_menu_mypage">
-                    <a href="review_list.mp">내 리뷰</a>
-                </div>
-            </div>
+            <%@include file="/resources/include/my_aside.jsp" %>
             <div class="content_area">
                 <h2>리뷰 등록 하기</h2>
                 <form:form commandName="review" action="review_update.mp" method="post" enctype="multipart/form-data">

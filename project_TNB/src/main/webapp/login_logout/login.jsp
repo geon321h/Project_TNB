@@ -7,6 +7,7 @@
 		member.setUser_id(1);
 		member.setUser_nickname("admin");
 		member.setUser_email("abc@naver.com");
+		member.setUser_type("A");
 		//System.out.println(member.user_email);
 		session.setAttribute("loginInfo", member);
 		response.sendRedirect(request.getContextPath()+"/main.jsp");

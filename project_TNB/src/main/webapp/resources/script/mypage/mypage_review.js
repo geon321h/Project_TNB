@@ -37,3 +37,4 @@ function deleteSaveImg(review_img_id){
         console.log(document.querySelector('input[name="image"]').value);
     }
 }
+
