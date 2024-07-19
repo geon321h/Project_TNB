@@ -19,12 +19,9 @@
 
     <div class="container-fruid min-vh-100 " id="content_container">
         <div class="content_mypage container">
-            <div class="aside_mypage">
-                <div class="aside_menu_mypage">
-                    <a href="myshop_list.mp">시설 관리</a>
-                    <a href="review_list.mp">내 리뷰</a>
-                </div>
-            </div>
+        
+            <%@include file="/resources/include/my_aside.jsp" %>
+            
             <div class="content_area">
                 <form:form commandName="shop" method="post" action="update_shop.mp" enctype="multipart/form-data">
                 <input type="hidden" value="${shop.shop_id}" name="shop_id">
@@ -88,7 +85,7 @@
                     </div>
                     <p class="">최소 1개이상의 이미지를 등록해주세요.</p><br>
                     <div class="image_area">
-                        <div class="file_area row">
+                        <div class="file_area">
                             <c:forEach items="${shop_image_list}" var="shop_img">
                                 <div class="save_img${shop_img.shop_img_id} save_area">
                                     <img src="<%=request.getContextPath()%>/resources/assets/image/${shop_img.image}" >

@@ -11,6 +11,11 @@
 	<mvc:annotation-driven/>	 
 	
 	 <context:component-scan base-package="shop.model, shop.controller, utility" />
+    <context:component-scan base-package="reservation"/>
+   <context:component-scan base-package="event"/>
+   <context:component-scan base-package="member"/>
+   <context:component-scan base-package="train"/>
+	 
 	
 	<!-- 요청후 실행될 파일의 경로 지정 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

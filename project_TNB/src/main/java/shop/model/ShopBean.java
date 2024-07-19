@@ -42,7 +42,7 @@ public class ShopBean {
 	
 	private String save_image;
 	private MultipartFile[] upload;
-	private String[] image_name = new String[10];
+	private String[] image_name;
 	
 	public MultipartFile[] getUpload() {
 		return upload;
@@ -52,6 +52,7 @@ public class ShopBean {
 		//System.out.println("setUpload");
 		this.upload = upload;
 		if (this.upload.length > 0 ) {
+			image_name = new String[upload.length];
 			for(int i=0;i<upload.length;i++) {
 				//System.out.println("###upload.getOriginalFilename():"+upload[i].getOriginalFilename()); // 이미지명
 				image_name[i] = upload[i].getOriginalFilename();

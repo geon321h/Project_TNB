@@ -58,17 +58,23 @@ public class MyShopUpdateController {
 		List<ServiceBean> Myservice = shopDao.getShopService(shop_id);
 		List<ShopBean> shop_image_list = myShopDao.getShopImage(shop_id);
 
-		shop.setShop_info(shop.getShop_info().replaceAll("<br>","\r\n"));
-		for(GuideBean guide : list_guide) {
-			guide.setGuide_content(guide.getGuide_content().replaceAll("<br>","\r\n"));								
+		try {
+			shop.setShop_info(shop.getShop_info().replaceAll("<br>","\r\n"));			
+		} catch (Exception e) {
+
 		}
-		if(Myservice.size()>0) {
-			String service_name = "";
-			for(ServiceBean service : Myservice) {
-				service_name += service.getService_id()+"_"+service.getService_name()+",";
+		if(list_guide!=null) { 
+			for(GuideBean guide : list_guide) {
+				guide.setGuide_content(guide.getGuide_content().replaceAll("<br>","\r\n"));								
 			}
-			shop.setService_name(service_name);
-			
+			if(Myservice.size()>0) {
+				String service_name = "";
+				for(ServiceBean service : Myservice) {
+					service_name += service.getService_id()+"_"+service.getService_name()+",";
+				}
+				shop.setService_name(service_name);
+				
+			}			
 		}
 		
 		mav.addObject("shop_image_list",shop_image_list);
@@ -140,7 +146,11 @@ public class MyShopUpdateController {
 	    } 
 		
 		
-		shop.setShop_info(shop.getShop_info().replaceAll("\r\n","<br>"));
+		try {
+			shop.setShop_info(shop.getShop_info().replaceAll("<br>","\r\n"));			
+		} catch (Exception e) {
+
+		}
 		if(guide_title!=null) {
 			for(int i=0;i<guide_content.length;i++) {
 				guide_content[i] = guide_content[i].replaceAll("\r\n","<br>");							

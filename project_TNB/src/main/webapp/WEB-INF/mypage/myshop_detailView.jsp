@@ -10,12 +10,9 @@
     <div class="container-fruid min-vh-100 " id="content_container">
  
         <div class="content_mypage container">
-            <div class="aside_mypage">
-                <div class="aside_menu_mypage">
-                    <a href="myshop_list.mp">시설 관리</a>
-                    <a href="review_list.mp">내 리뷰</a>
-                </div>
-            </div>
+        
+           <%@include file="/resources/include/my_aside.jsp" %>
+           
             <div class="content_area">
                 <div class="shop_info_area shop_content_area">
                 	<p class="shop_name_text">${shop_info.shop_name}</p>
@@ -71,6 +68,9 @@
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                           <div class="accordion-body">
+                          	<div class="text-end">
+                            	<button class="btn btn-primary room_add_btn" onclick="location.href='insert_room.mp?shop_id=${shop_info.shop_id}'">객실 추가</button>
+                            </div>
                             <c:forEach items="${shop_room}" var="room">
                                 <div class="room_area">
                                     <div class="room_image_area">
@@ -94,6 +94,7 @@
                                     </div>
                                 </div>
                             </c:forEach>
+                            
                           </div>
                         </div>
                     </div>

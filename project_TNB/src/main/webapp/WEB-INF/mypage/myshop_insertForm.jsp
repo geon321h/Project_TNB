@@ -19,12 +19,9 @@
 
     <div class="container-fruid min-vh-100 " id="content_container">
         <div class="content_mypage container">
-            <div class="aside_mypage">
-                <div class="aside_menu_mypage">
-                    <a href="myshop_list.mp">시설 관리</a>
-                    <a href="review_list.mp">내 리뷰</a>
-                </div>
-            </div>
+        
+            <%@include file="/resources/include/my_aside.jsp" %>
+            
             <div class="content_area">
                 <form:form commandName="shop" method="post" action="insert_shop.mp" enctype="multipart/form-data">
                 <div class="shop_content_area shop_insert_area">
