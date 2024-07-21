@@ -36,7 +36,7 @@
                           </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                          <div class="accordion-body row gap-3">
+                          <div class="accordion-body row gap-1">
                             <c:forEach items="${shop_image}" var="image">
                             	<div class="shop_img_box">
                             		<img src="<%=request.getContextPath()%>/resources/assets/image/${image}">
@@ -77,7 +77,13 @@
                                         <img src="<%=request.getContextPath()%>/resources/assets/image/${room.image}">
                                     </div>
                                     <div class="room_text_area">
-                                        <p class="room_name">${room.room_name}</p>
+                                    	<div class="room_top_area">
+	                                        <p class="room_name">${room.room_name}</p>
+	                                        <div>
+	                                        	<i class="bi bi-pencil btn btn-success" onclick="updateRoomMove(${shop_info.shop_id},${room.room_id})"></i>
+	                                        	<i class="bi bi-trash3 btn btn-danger" onclick="deleteRoomCheck(${shop_info.shop_id},${room.room_id})"></i>
+	                                        </div>
+                                    	</div>
                                         <div class="room_info_area">
                                             <div class="room_time_people_area">
                                                 <p class="sub_title">인원</p>
@@ -93,8 +99,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </c:forEach>
-                            
+                            </c:forEach>                            
                           </div>
                         </div>
                     </div>

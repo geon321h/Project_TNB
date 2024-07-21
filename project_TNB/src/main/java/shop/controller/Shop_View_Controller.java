@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.model.MemberBean;
 import shop.model.GuideBean;
 import shop.model.ReviewBean;
 import shop.model.ReviewDao;
@@ -59,12 +60,11 @@ public class Shop_View_Controller {
 		List<ReviewBean> review_image = reviewDao.getShopReviewImage(shop_id);
 		
 		// member 테이블 추가후 수정 해야 하는 부분
-		
+		List<ReviewBean> review_recommend = null;
 		if(session.getAttribute("loginInfo")!=null) {			
-		}
-		List<ReviewBean> review_recommend = reviewDao.getRecommendUser("1");
-		
-		// ---------------------------------------		
+			MemberBean member = (MemberBean)session.getAttribute("loginInfo");
+			review_recommend = reviewDao.getRecommendUser(String.valueOf(member.getUser_id()));
+		}		
 		
 		mav.addObject("review_recommend",review_recommend);
 		mav.addObject("shop_review",shop_review);

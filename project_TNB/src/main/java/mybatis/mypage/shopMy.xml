@@ -26,10 +26,10 @@
  	</select>
  	
 	<select id="getMyShopRoom" resultType="room">
-		SELECT SHOP_ID, T21.ROOM_ID,ROOM_NAME,PRICE,MAX_PEOPLE,STANDARD_PEOPLE,CHECK_IN,CHECK_OUT,ROOM_COUNT,IMAGE
+		SELECT T21.SHOP_ID, T21.ROOM_ID,ROOM_NAME,PRICE,MAX_PEOPLE,STANDARD_PEOPLE,CHECK_IN,CHECK_OUT,ROOM_COUNT,IMAGE
 		FROM SHOP_ROOM T21
 		LEFT OUTER JOIN 
-		    (SELECT IMAGE,ROOM_IMG_ID,T10.ROOM_ID
+		    (SELECT IMAGE,ROOM_IMG_ID,T10.ROOM_ID,T10.SHOP_ID
 			FROM ROOM_IMAGE T10,
 			      (SELECT MIN(ROOM_IMG_ID) MIN_IMG,ROOM_ID,SHOP_ID
 						FROM ROOM_IMAGE 
@@ -38,6 +38,7 @@
 			AND T10.ROOM_ID = T20.ROOM_ID
 			AND T10.SHOP_ID = T20.SHOP_ID) T22
 		ON T21.ROOM_ID = T22.ROOM_ID
+		AND T21.SHOP_ID = T22.SHOP_ID
 		WHERE T21.SHOP_ID = #{shop_id}
  	</select>
  	
@@ -145,12 +146,12 @@
  	
  	<select id="getRoomId" resultType="integer">
  		SELECT MAX(ROOM_ID)
- 		FROM ROOM
+ 		FROM SHOP_ROOM
  		WHERE SHOP_ID = #{shop_id}
  	</select>
  	
  	<select id="getRoomImageId" resultType="integer">
- 		SELECT NVL(MAX(ROOM_IMG_ID),0)+1 FROM ROOM_IMAGE WHERE ROOM_ID=#{room_id}, SHOP_ID = #{shop_id}
+ 		SELECT NVL(MAX(ROOM_IMG_ID),0)+1 FROM ROOM_IMAGE WHERE ROOM_ID=#{room_id} AND SHOP_ID = #{shop_id}
  	</select>
  	
 	<insert id="insertRoomImage" parameterType="list">
@@ -175,6 +176,45 @@
 					 #{shop_id}, #{shop_id}, #{price}, #{max_people},
 					 #{standard_people},#{check_in},#{check_out},#{room_count})
  	</insert>
+ 	
+ 	<select id="getOneRoomImage" resultType="room">
+ 		SELECT *
+		FROM ROOM_IMAGE
+		WHERE SHOP_ID = #{shop_id}
+		AND ROOM_ID = #{room_id}
+		ORDER BY ROOM_IMG_ID
+ 	</select>
+ 	
+ 	<delete id="deleteRoom">
+ 		DELETE SHOP_ROOM 
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND ROOM_ID = #{room_id}
+ 	</delete>
+ 	
+ 	<select id="getOneRoom" resultType="room">
+ 		SELECT *
+		FROM SHOP_ROOM
+		WHERE SHOP_ID = #{shop_id}
+		AND ROOM_ID = #{room_id}
+ 	</select>
+ 	
+ 	<delete id="deleteRoomImage">
+ 		DELETE ROOM_IMAGE 
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND ROOM_ID = #{room_id}
+ 		AND ROOM_IMG_ID = #{room_img_id}
+ 	</delete>
+ 	
+ 	<update id="updateRoom">
+ 		UPDATE SHOP_ROOM
+ 		SET ROOM_NAME= #{room_name},PRICE= #{price}
+ 		,MAX_PEOPLE= #{max_people},STANDARD_PEOPLE= #{standard_people}
+ 		,CHECK_IN= #{check_in} ,CHECK_OUT= #{check_out}
+ 		,ROOM_COUNT= #{room_count}
+ 		WHERE SHOP_ID = #{shop_id}
+ 		AND ROOM_ID = #{room_id}
+ 	</update>
+ 	
  	
  </mapper>
  

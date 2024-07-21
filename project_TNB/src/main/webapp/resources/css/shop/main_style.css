@@ -40,7 +40,8 @@
 /* 컨텐츠 */
 
 #content_container {
-    margin-top: 50px;    
+    margin-top: 50px;  
+    margin-bottom: 50px;  
 }
 
 #content_container h2 {
@@ -50,9 +51,61 @@
     margin: 0;
 }
 
-.region_area ,.category_area{
+.content_slide_box{
     width: 100%;
-    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 80px;
+}
+
+.slide_box_area {
+    position: relative;
+    width: 1200px;
+    height: 270px;
+}
+
+.content_slide_view {
+    position: relative;
+    width: 1200px;
+    height: 270px;
+    overflow: hidden;
+}
+
+.content_slide_view .slide_inner {
+    display: flex;
+    flex-wrap: wrap;
+    width: 2400px;
+    height: 270px;
+}
+
+.slider__btn div {
+    position: absolute;
+    top: 50%;
+    transform:  translateY(-140%);
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+} 
+
+.slider__btn .prev {
+    left: -25px;
+}
+.slider__btn .next {
+    right: -25px;
+}
+
+#content_container .default_box {
+    width: 100%; 
+    max-width: 1200px; 
+    text-align: center;  
+    padding-top: 120px;
+    border: 1px solid var(--bs-gray-300);
+    color: var(--bs-gray-500);
 }
 
 #content_container .region_area label,#content_container .category_area label{
@@ -78,22 +131,21 @@
 }
 
 #content_container .content_box {
-    width: 281px;
+    width: 285px;
     height: 270px;
     display: inline-block;
-    margin-right: 19px;
-    margin-bottom: 30px;
+    margin-right: 20px;
 }
 
 #content_container .content_box .content_img {
-    width: 281px;
+    width: 285px;
     height: 180px;
     overflow: hidden;
     border-radius: 15px;
 }
 
 #content_container .content_box .content_img img {
-    width: 281px;
+    width: 285px;
     height: 180px; 
     object-fit: cover;
 }
@@ -126,7 +178,7 @@
     color: #FFAD0A;
     line-height: 14px;
     margin: 0;
-    margin-bottom: 10px;
+    margin-top: 7px;
 }
 
 #content_container .content_box .content_grade img {

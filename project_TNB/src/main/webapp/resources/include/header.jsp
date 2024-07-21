@@ -31,8 +31,8 @@
 				</c:if>
 				<c:if test="${sessionScope.loginInfo!=null}">
 					<div class="profile text-start">
-						<div>
-							<img class="profile_img" src="<%=request.getContextPath()%>/resources/assets/image/profile_standard.svg" >
+						<div class="profile_img_area">
+							<img class="profile_img" src="<%=request.getContextPath()%>/resources/assets/image/서울신라호텔_review2_2.jpg" >
 						</div>
 						<div class="profile_text">
 							<p class="profile_name">${sessionScope.loginInfo.user_nickname}</p>

@@ -13,8 +13,9 @@
            <%@include file="/resources/include/my_aside.jsp" %>
            
             <div class="content_area">
-                <form:form commandName="room" method="post" action="insert_room.mp" enctype="multipart/form-data">
+                <form:form commandName="room" method="post" action="update_room.mp" enctype="multipart/form-data">
                 <input type="hidden" value="${room.shop_id}" name="shop_id">
+                <input type="hidden" value="${room.room_id}" name="room_id">
                 <div class="room_content_area room_insert_area">
                 	<p class="info_title">객실명*</p>
                     <div class="info_content">
@@ -36,7 +37,7 @@
 	                            <c:if test="${room.max_people == max_people}"> selected </c:if>
 	                            >${max_people} 인</option>
                             </c:forEach>
-                        </select> 
+                        </select>
 						기준 인원             
                         <select class="form-select room_select" name="standard_people" 
                         aria-label=".form-select-standard_people">
@@ -95,7 +96,13 @@
                     <p class="">최소 1개이상의 이미지를 등록해주세요.</p><br>
                     <div class="image_area">
                         <div class="file_area">
-                            <input type="file" name="upload">
+                            <c:forEach items="${room_image_list}" var="room_img">
+                                <div class="save_img${room_img.room_img_id} save_area">
+                                    <img src="<%=request.getContextPath()%>/resources/assets/image/${room_img.image}" >
+                                    <input type="hidden" value="${room_img.room_img_id}" name="save_image">
+                                    <button onclick="deleteSaveImg(${room_img.room_img_id})"><i class="bi bi-trash-fill"></i></button>
+                                </div>                                			
+                            </c:forEach>
                         </div>
                     </div>
                     <p class="err file_err"></p>

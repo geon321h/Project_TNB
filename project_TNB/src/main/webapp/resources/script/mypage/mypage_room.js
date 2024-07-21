@@ -33,21 +33,17 @@ function checkSubmit(){
             document.querySelector('.file_err').innerHTML = "";
         }
     }
-    const max_people = $('select[name=max_people]').val();
-    const standard_people = $('select[name=standard_people]').val();
-
 
     if(file_check){
         return false;
     }
-    return false;
 }
 
 function deleteSaveImg(id){
     const image_area = document.querySelector('.image_area');
     document.querySelector('.save_img'+id).remove();
     let save_length = $('.save_area').length;
-    console.log(save_length);
+    //console.log(save_length);
     if(save_length==0){
         image_area.removeChild(image_area.firstElementChild);
     }
@@ -56,3 +52,25 @@ function deleteSaveImg(id){
         image_add();
     }
 }
+
+
+window.addEventListener('load', function() {  
+
+    const max_people = $('select[name=max_people]');
+    const standard_people = $('select[name=standard_people]');
+
+    max_people.on('change', () => {
+        if(max_people.val()<standard_people.val()){
+            //console.log("최대변경 작음");
+            $('select[name=standard_people]').val(max_people.val()).prop("selected", true);
+        }
+    });
+
+    standard_people.on('change', () => {
+        if(max_people.val()<standard_people.val()){
+            //console.log("기준변경 더큼");
+            $('select[name=max_people]').val(standard_people.val()).prop("selected", true);
+        }
+    });
+
+});

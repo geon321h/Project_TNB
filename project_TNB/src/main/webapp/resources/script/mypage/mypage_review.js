@@ -38,3 +38,14 @@ function deleteSaveImg(review_img_id){
     }
 }
 
+function image_delete(){
+    const image_area = document.querySelector('.insert_img_area');
+    let file_length = $('.file_area').length;
+    if(file_length<=1){
+        alert("최소 1개이상의 이미지를 등록해주세요.");
+    }else{
+        image_area.removeChild(image_area.lastElementChild);
+    }
+}
+
+

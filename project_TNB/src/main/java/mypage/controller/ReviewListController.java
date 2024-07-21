@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.model.MemberBean;
 import shop.model.ReviewBean;
 import shop.model.ReviewDao;
 
@@ -29,13 +30,11 @@ public class ReviewListController {
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		// member 테이블 추가후 수정 해야 하는 부분
-		// member bean 이 있어야 아이디 가져올수있음
+		List<ReviewBean> review_list = null;
 		if(session.getAttribute("loginInfo")!=null) {			
+			MemberBean member = (MemberBean)session.getAttribute("loginInfo");
+			review_list = reviewDao.getMyReview(String.valueOf(member.getUser_id()));
 		}
-		List<ReviewBean> review_list = reviewDao.getMyReview("1");
-		
-		// ---------------------------------------		
 		
 		mav.addObject("review_list", review_list);
 		mav.setViewName(getPage);

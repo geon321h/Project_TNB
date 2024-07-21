@@ -246,6 +246,12 @@
     padding: 10px 15px;
 }
 
+
+#content_container .shop_content_area .room_top_area {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* 시설 등록 */
 
 .shop_insert_area .info_content {

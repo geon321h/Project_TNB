@@ -12,63 +12,55 @@
         <div class="content_mypage container">
             <%@include file="/resources/include/my_aside.jsp" %>
             <div class="content_area">
-                <h2>리뷰 등록 하기</h2>
                 <form:form commandName="review" action="review_insert.mp" method="post" enctype="multipart/form-data">
-                	<input type="text" name="shop_name" value="${shop_name}">
-                	<input type="text" name="room_reservation_num" value="${reservation.room_reservation_num}">
-                	<input type="text" name="reservation_id" value="${reservation.room_reservation_num}">
-                	<input type="text" name="shop_id" value="${reservation.shop_id}">
-                	<input type="text" name="room_id" value="${reservation.room_id}">
-                	<input type="text" name="user_id" value="${sessionScope.loginInfo.user_id}">
-                	<input type="text" name="room_checkin_date" value="${reservation.room_checkin_date}">
-                	<input type="text" name="room_checkout_date" value="${reservation.room_checkout_date}">
-               		<table>
-                        <tr>
-                            <td>시설명</td>
-                            <td>${shop_name}</td>                            
-                        </tr>
-                        <tr>
-                        	<fmt:parseDate value="${reservation.room_checkin_date}" var="room_checkin_date" pattern="yyyy-MM-dd"/>
-                        	<fmt:parseDate value="${reservation.room_checkout_date}" var="room_checkout_date" pattern="yyyy-MM-dd"/>
-                            <td>예약 기간</td>
-                            <td>
-                            	<fmt:formatDate value="${room_checkin_date}" pattern="yyyy-MM-dd"/>
+                	<input type="hidden" name="shop_name" value="${shop_name}">
+                	<input type="hidden" name="room_reservation_num" value="${reservation.room_reservation_num}">
+                	<input type="hidden" name="reservation_id" value="${reservation.room_reservation_num}">
+                	<input type="hidden" name="shop_id" value="${reservation.shop_id}">
+                	<input type="hidden" name="room_id" value="${reservation.room_id}">
+                	<input type="hidden" name="room_checkin_date" value="${reservation.room_checkin_date}">
+                	<input type="hidden" name="room_checkout_date" value="${reservation.room_checkout_date}">
+                    <fmt:parseDate value="${reservation.room_checkin_date}" var="room_checkin_date" pattern="yyyy-MM-dd"/>
+                    <fmt:parseDate value="${reservation.room_checkout_date}" var="room_checkout_date" pattern="yyyy-MM-dd"/>
+                    <div class="reivew_content_area reivew_insert_area">
+                        <p class="info_title">${shop_name}</p>
+                        <p>
+                            예약기간 :
+                            <fmt:formatDate value="${room_checkin_date}" pattern="yyyy-MM-dd"/>
                             	~
-                            	<fmt:formatDate value="${room_checkout_date}" pattern="yyyy-MM-dd"/>
-                            </td>    
-                       </tr>  
-                       <tr>
-                           <td>평점</td>
-                           <td>
-                               <input type="range" name="grade" class="grade_range" min="1" max="10" step="0.5" value="10">
-                               <label class="grade_range_text"><span class="grade_text">10</span> 점</label>
-                           </td>                            
-                       </tr>                            
-                       <tr>
-                           <td>이미지</td>
-                           <td>
-                                <div class="insert_img_area">
-                                    <div class="file_area">
-                                        <input type="file" name="upload">
-                                    </div>
-                                </div>
-                                <input type="button" class="btn" value="이미지 추가" onclick="insertImg()">
-                                <p><form:errors path="image" cssClass="err"></form:errors></p>
-                           </td>                            
-                       </tr>                            
-                       <tr>
-                           <td>내용</td>
-                           <td>
-                           		<textarea name="review_content">${review.review_content}</textarea>
-                           		<br><form:errors path="review_content"/>
-                           </td>                            
-                       </tr>                            
-                       <tr>
-                       		<td colspan="2">
-                       			<input type="submit" value="추가">
-                       		</td>
-                       </tr>                        
-               		</table>
+                            <fmt:formatDate value="${room_checkout_date}" pattern="yyyy-MM-dd"/>
+                        </p>
+                        <br>
+                        <p class="info_title">평점*</p>
+                        <div class="info_content">
+                            <input type="range" name="grade" class="grade_range" min="1" max="10" step="0.5" value="10">
+                            <label class="grade_range_text"><span class="grade_text">10</span> 점</label>
+                        </div>
+                        <p class="info_title">내용*</p>
+                        <div class="info_content">
+                            <textarea name="review_content" class="review_textarea" placeholder="리뷰 내용을 입력해주세요. (최대 100자)" >${review.review_content}</textarea>
+                            <p><form:errors path="review_content" cssClass="err" /></p>
+                        </div>
+                    </div>
+                    <div class="reivew_content_area reivew_insert_area">
+                        <div class="area_top">
+                            <p class="info_title pt-2">이미지*</p>                        
+                            <div>
+                                <input type="button" class="btn btn-outline-secondary" onclick="image_delete()" value="이미지 삭제">
+                                <input type="button" class="btn btn-secondary" onclick="insertImg()" value="이미지 추가">
+                            </div>
+                        </div>
+                        <p class="">최소 1개이상의 이미지를 등록해주세요.</p><br>
+                        <div class="insert_img_area">
+                            <div class="file_area">
+                                <input type="file" name="upload">
+                            </div>
+                        </div>
+                        <p><form:errors path="image" cssClass="err"></form:errors></p>
+                    </div>
+                    <div class="text-end">
+                        <input type="submit" value="등록" class="submit_btn">
+                    </div>
                 </form:form>
                 
             </div>

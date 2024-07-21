@@ -59,13 +59,42 @@ window.addEventListener('DOMContentLoaded', function() {
             map: map
         });
     }
-
-    
-
   
-
-
 })
+
+let sliderWidth = 220;  //이미지 가로값
+
+function slider_btn(id,type,count){
+    let currentIndex = parseInt(document.querySelector(`.review_num${id} .currentIndex`).value);
+    let sliderCount = count-3;
+    if(count>4){
+        console.log("currentIndex:"+currentIndex);
+        console.log("sliderCount:"+sliderCount);
+
+        let prevIndex = (currentIndex + sliderCount-1) % sliderCount
+        let nextIndex = (currentIndex + 1) % sliderCount
+    
+        console.log("prevIndex:"+prevIndex);
+        console.log("nextIndex:"+nextIndex);
+
+        if(type=="prev"){
+            gotoSlider(prevIndex,id);
+        } else {
+            gotoSlider(nextIndex,id);
+        }
+    }
+
+}
+
+function gotoSlider(num,id){
+    console.log("num:"+num);
+    let review_image = document.querySelector(`.review_num${id} .review_image`);
+    review_image.style.transition = "all 400ms"
+    review_image.style.transform = "translateX("+ -sliderWidth * num+"px)"
+    //console.log(region_currentIndex);
+    let current_input = document.querySelector(`.review_num${id} .currentIndex`);
+    current_input.value = num;
+}
 
 function copy() {
     var copyTxt = document.querySelector("#address");
@@ -75,15 +104,12 @@ function copy() {
     alert("복사되었습니다.");
 }
 
-function selectReview(column) {
-
-}
-
 function recommend(like,review_id,user_id) {
     const count = document.querySelector('#recommend_count'+review_id).innerHTML;
     // console.log(count);
     if(user_id==null){
-        user_id=1;
+        alert("로그인이 필요한 기능입니다.");        
+        return location.href="loginForm.mb";
     }
     const command = `?like=${like}&review_id=${review_id}&user_id=${user_id}`;
     // console.log(command);
@@ -104,4 +130,55 @@ function recommend(like,review_id,user_id) {
         }
 
     });
+}
+
+
+$(window).scroll(  
+    function(){  
+        //console.log($(window).scrollTop());
+        const body_height =  document.body.offsetHeight;
+        const footer_height =  document.querySelector("footer").offsetHeight
+        let max_height = body_height - footer_height - 655;
+        //console.log(body_height) ;   
+        //console.log(max_height) ;        
+        if($(window).scrollTop() > 500 && $(window).scrollTop() < max_height){  
+            $('.content_nav').css("margin-top",($(window).scrollTop()-550)+"px");  
+
+        }
+        if ($(window).scrollTop() <= 500){  
+            $('.content_nav').css("margin-top","0px");              
+        }  
+    }  
+);  
+
+
+
+
+ function popClose() {
+
+    var modalPop_room = $('.modal_wrap_room');
+    var modalPop_shop = $('.modal_wrap_shop');
+    var modalBg = $('.modal_bg');
+
+    $(modalPop_shop).hide();
+    $(modalPop_room).hide();
+    $(modalBg).hide();
+
+}
+
+function mainImg(src,type,choice){
+    console.log(choice);
+    if(type=="room"){
+        document.querySelector(".room_main_image").setAttribute('src',src);
+        $(".modal_img_box").css("border","0");
+        $(".modal_img_box").css("padding","4px");
+        choice.style.padding = "2px";
+        choice.style.border = "2px solid #33692B";
+    }else{
+        document.querySelector(".shop_main_image").setAttribute('src',src);
+        $(".modal_img_box").css("border","0");
+        $(".modal_img_box").css("padding","4px");
+        choice.style.padding = "2px";
+        choice.style.border = "2px solid #33692B";
+    }
 }

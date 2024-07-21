@@ -3,8 +3,10 @@ package mypage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import member.model.MemberBean;
 import mypage.model.MyReviewDao;
 import mypage.model.RoomReservationBean;
 import shop.model.ReviewBean; 
 import shop.model.ReviewDao;
+import shop.model.ShopBean;
 
 @Controller
 public class ReviewInsertController {
@@ -58,7 +62,8 @@ public class ReviewInsertController {
 			@RequestParam(value = "shop_name") String shop_name,
 			@ModelAttribute("reservation") @Valid RoomReservationBean reservation,
 			@ModelAttribute("review") @Valid ReviewBean review, 
-			BindingResult result) {
+			BindingResult result,
+			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("shop_name", shop_name);
 		//System.out.println("review.image:"+review.getImage());
@@ -67,6 +72,11 @@ public class ReviewInsertController {
 			System.out.println("에러");
 			mav.setViewName(getPage);
 			return mav;
+		}
+		
+		if(session.getAttribute("loginInfo") != null) {
+			MemberBean member = (MemberBean)session.getAttribute("loginInfo");
+			review.setUser_id(member.getUser_id());
 		}
 		
 		//  개행 적용

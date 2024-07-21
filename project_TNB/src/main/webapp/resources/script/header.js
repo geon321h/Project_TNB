@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener('load', function() {  
 
     /* 사이드바 열기 */
     const menu = document.querySelector('.nav__menu');
@@ -8,5 +8,5 @@ window.onload = function() {
       menu.classList.toggle('active_menu');
     });
     
-};
+});
 
