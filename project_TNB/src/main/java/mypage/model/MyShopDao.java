@@ -3,6 +3,7 @@ package mypage.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class MyShopDao {
 		
 	}
 
-	public int updateReview(ShopBean shop, List<GuideBean> list_guide, List<GuideBean> save_guide) {
+	public int updateShop(ShopBean shop, List<GuideBean> list_guide, List<GuideBean> save_guide) {
 		int cnt = -1;
 		cnt = sqlSessionTemplate.update(namespace+".updateShop",shop);
 		int shop_id = shop.getShop_id();
@@ -194,6 +195,55 @@ public class MyShopDao {
 		}		
 		sqlSessionTemplate.insert(namespace+".insertRoomImage",list_image);
 		
+		return cnt;
+	}
+
+	public List<ShopRoomBean> getOneRoomImage(Map<String, String> map) {
+		List<ShopRoomBean> lists = new ArrayList<ShopRoomBean>();
+		lists = sqlSessionTemplate.selectList(namespace+".getOneRoomImage",map);
+		return  lists;
+	}
+
+	public int deleteRoom(Map<String, String> map) {
+		int cnt =-1;
+		cnt = sqlSessionTemplate.delete(namespace+".deleteRoom",map);	
+		return cnt;
+	}
+
+	public ShopRoomBean getOneRoom(Map<String, String> map) {
+		ShopRoomBean srb = new ShopRoomBean();
+		srb = sqlSessionTemplate.selectOne(namespace+".getOneRoom",map);
+		return srb;
+	}
+
+	public void deleteRoomImage(ShopRoomBean image) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.delete(namespace+".deleteRoomImage",image);
+		if(cnt<=0) {
+			System.out.println("삭제실패");
+		}		
+	}
+
+	public int updateRoom(ShopRoomBean room) {
+		int cnt = -1;
+		cnt = sqlSessionTemplate.update(namespace+".updateRoom",room);
+		
+		// 2. room 이미지 넣기
+		int room_img_id = sqlSessionTemplate.selectOne(namespace+".getRoomImageId",room);
+		
+		List<ShopRoomBean> list_image = new ArrayList<ShopRoomBean>();
+		if(room.getUpload()!=null) {
+			for(int i=0;i<room.getUpload().length;i++) { // image_name[] 대신 갯수가 정해진 getUpload 사용
+				ShopRoomBean rb = new ShopRoomBean();
+				rb.setImage(room.getImage_name()[i]);
+				rb.setShop_id(room.getShop_id());
+				rb.setRoom_id(room.getRoom_id());
+				rb.setRoom_img_id(room_img_id);
+				list_image.add(rb);
+				room_img_id++;
+			}		
+			sqlSessionTemplate.insert(namespace+".insertRoomImage",list_image);
+		}
 		return cnt;
 	}
 	

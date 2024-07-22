@@ -168,7 +168,7 @@ public class MyShopUpdateController {
 		List<GuideBean> save_guide = shopDao.getShopGuide(String.valueOf(shop.getShop_id()));
 		
 		int cnt = -1;
-		cnt = myShopDao.updateReview(shop,list_guide,save_guide);
+		cnt = myShopDao.updateShop(shop,list_guide,save_guide);  
 		if(cnt>0) {
 			// 신규 추가 이미지
 			if(shop.getUpload()!=null) {

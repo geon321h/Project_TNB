@@ -78,7 +78,7 @@ public class MyRoomInsertController {
 		}
 
 		int cnt = -1;
-		//cnt = myShopDao.insertRoom(room);
+		cnt = myShopDao.insertRoom(room);
 
 		if (cnt > 0) {
 			for (MultipartFile upload : room.getUpload()) {
@@ -95,15 +95,14 @@ public class MyRoomInsertController {
 					e.printStackTrace();
 				}
 			}
-			mav.setViewName(goToPage);
+			mav.setViewName(goToPage+room.getShop_id());
 
 		} else {
 
 			mav.setViewName(getPage);
 		}
 		
-		System.out.println("### 성공");
-		mav.setViewName(getPage);
+		//System.out.println("### 성공");
 		return mav;
 	}
 

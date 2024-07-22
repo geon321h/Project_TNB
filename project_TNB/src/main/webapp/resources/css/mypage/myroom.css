@@ -119,3 +119,17 @@
     height: 160px;
     object-fit: cover;
 }
+
+.save_area button{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--bs-gray-900);
+    opacity: 80%;
+    color: white;
+    border: 0;
+    outline: none;
+}

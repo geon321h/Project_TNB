@@ -152,3 +152,19 @@ function deleteSaveImg(id){
         image_add();
     }
 }
+
+function deleteRoomCheck(shop_id,room_id){
+    console.log(shop_id);
+    if(confirm("삭제하겠습니까?")){
+        location.href="delete_room.mp?shop_id="+shop_id+"&room_id="+room_id;
+        alert("삭제완료");
+	}
+
+}
+
+
+function updateRoomMove(shop_id,room_id){
+
+    location.href="update_room.mp?shop_id="+shop_id+"&room_id="+room_id;
+
+}

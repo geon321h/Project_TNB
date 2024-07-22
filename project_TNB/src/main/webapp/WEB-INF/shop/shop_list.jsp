@@ -47,7 +47,9 @@
 				<c:forEach  items="${list_service}" var="service">
 					<input type="checkbox" name="service" 
 					class="btn-check" id="btn-check-${service.service_id}"autocomplete="off"
-					<c:if test="${fn:contains(search.service,service.service_id)}"> checked </c:if>
+					<c:forEach items="${fn:split(search.service,',')}" var="service_choice">
+						<c:if test="${service_choice == service.service_id}"> checked </c:if>
+					</c:forEach>					
 					value="${service.service_id}">
 					<label class="btn btn-primary" for="btn-check-${service.service_id}">${service.service_name}</label>
 				</c:forEach>
